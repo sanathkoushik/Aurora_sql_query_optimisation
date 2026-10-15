@@ -315,6 +315,7 @@ class Analyzer {
         case 'in': {
           const v = bindOperand(x.operand);
           const items = x.items.map(bindOperand);
+          if (items.some((it) => it.k !== 'lit')) this.err('IN lists may contain only literal values', x.pos);
           items.forEach((it) => this.checkComparable(v, it, x.pos, typeOf));
           return { k: 'in', e: v, items, negated: x.negated };
         }
