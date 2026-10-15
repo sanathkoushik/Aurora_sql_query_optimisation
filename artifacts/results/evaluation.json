@@ -1,0 +1,6018 @@
+{
+  "generated_at": "2026-10-15T17:30:52.685Z",
+  "environment_id": "pyodide-0.27.8/node-v24.13.0/python-3.12.7/pandas-2.2.3/numpy-2.0.2",
+  "hit_tolerance": 1.05,
+  "llm_used": false,
+  "test": {
+    "A": {
+      "cases": 24,
+      "median_selected_runtime_ms": 19.173999000000002,
+      "median_regret": 1.0290883601965382,
+      "median_regret_ci95": [
+        1.0171638428554872,
+        1.1089087743667032
+      ],
+      "mean_regret": 1.0790345327064463,
+      "oracle_hit_rate_pct": 62.5,
+      "median_decision_latency_ms": 0.025600000000395084,
+      "result_failures": 0,
+      "sources": [
+        "rules"
+      ]
+    },
+    "B": {
+      "cases": 24,
+      "median_selected_runtime_ms": 17.8467995,
+      "median_regret": 1.0274331724312353,
+      "median_regret_ci95": [
+        1.0098115027606476,
+        1.1206522685555609
+      ],
+      "mean_regret": 1.0783672246885916,
+      "oracle_hit_rate_pct": 62.5,
+      "median_decision_latency_ms": 0.15999999999985448,
+      "result_failures": 0,
+      "sources": [
+        "cost-model (LLM not configured)"
+      ]
+    },
+    "C": {
+      "cases": 24,
+      "median_selected_runtime_ms": 19.164049,
+      "median_regret": 1.0228774306017545,
+      "median_regret_ci95": [
+        1.009270989774742,
+        1.0464334602483136
+      ],
+      "mean_regret": 1.0709305171961245,
+      "oracle_hit_rate_pct": 70.83333333333333,
+      "median_decision_latency_ms": 0.23685000000068612,
+      "result_failures": 0,
+      "sources": [
+        "predictor aurora-rf-v1"
+      ]
+    },
+    "paired": [
+      {
+        "a": "A",
+        "b": "C",
+        "mean_regret_diff": 0.00810401551032213,
+        "ci95": [
+          -0.02221400241483627,
+          0.03788777117373434
+        ],
+        "verdict": "inconclusive (CI includes 0)"
+      },
+      {
+        "a": "B",
+        "b": "C",
+        "mean_regret_diff": 0.007436707492467397,
+        "ci95": [
+          -0.057989438714327185,
+          0.06412157530751202
+        ],
+        "verdict": "inconclusive (CI includes 0)"
+      },
+      {
+        "a": "A",
+        "b": "B",
+        "mean_regret_diff": 0.0006673080178547323,
+        "ci95": [
+          -0.04451953932953328,
+          0.05577797755312144
+        ],
+        "verdict": "inconclusive (CI includes 0)"
+      }
+    ]
+  },
+  "all_cases_A_vs_B": {
+    "A": {
+      "cases": 96,
+      "median_selected_runtime_ms": 13.8109,
+      "median_regret": 1.0348599663811338,
+      "median_regret_ci95": [
+        1.022066397419366,
+        1.0532265438302157
+      ],
+      "mean_regret": 1.0755558367877625,
+      "oracle_hit_rate_pct": 58.333333333333336,
+      "median_decision_latency_ms": 0.019900000000234286,
+      "result_failures": 0,
+      "sources": [
+        "rules"
+      ]
+    },
+    "B": {
+      "cases": 96,
+      "median_selected_runtime_ms": 13.6682995,
+      "median_regret": 1.0265056828119588,
+      "median_regret_ci95": [
+        1.0151851605537636,
+        1.0378991716609252
+      ],
+      "mean_regret": 1.0629867606873125,
+      "oracle_hit_rate_pct": 66.66666666666667,
+      "median_decision_latency_ms": 0.11079999999992651,
+      "result_failures": 0,
+      "sources": [
+        "cost-model (LLM not configured)"
+      ]
+    },
+    "paired": {
+      "a": "A",
+      "b": "B",
+      "mean_regret_diff": 0.012569076100449642,
+      "ci95": [
+        -0.008064210486507017,
+        0.036352729786449434
+      ],
+      "verdict": "inconclusive (CI includes 0)"
+    }
+  },
+  "noise": {
+    "median_relative_spread": 0.3589988097821042,
+    "p90_relative_spread": 0.9397737939876823
+  },
+  "cases": [
+    {
+      "template": "f1",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 3.0921,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 3.0921,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.20859999999993306,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 3.0921,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 1.870600000000195,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 3.0921,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 1.1718000000000757,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.05548112238655,
+        "P2": 3.5414264343084945,
+        "P3": 3.6664633023314295
+      },
+      "measuredMs": {
+        "P1": 3.0921,
+        "P2": 3.6176,
+        "P3": 3.5382
+      }
+    },
+    {
+      "template": "f1",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 2.846801,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 2.846801,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.06460000000060973,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 2.846801,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.17050000000017462,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 2.846801,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.23409999999967113,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.1220163416640445,
+        "P2": 3.564912967349908,
+        "P3": 3.9642975848689184
+      },
+      "measuredMs": {
+        "P1": 2.846801,
+        "P2": 3.1975,
+        "P3": 4.711799
+      }
+    },
+    {
+      "template": "f1",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 3.027,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 3.027,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.06340000000000146,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 3.027,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.10309999999935826,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 3.027,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.18670000000020082,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.1925916306089297,
+        "P2": 3.6971873042790837,
+        "P3": 3.7327249004266
+      },
+      "measuredMs": {
+        "P1": 3.027,
+        "P2": 3.633,
+        "P3": 3.527
+      }
+    },
+    {
+      "template": "f1",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 3.218901,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 3.218901,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.047899999999572174,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 3.218901,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.06710000000020955,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 3.218901,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.11920000000009168,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.276262804815736,
+        "P2": 3.7168435374099165,
+        "P3": 3.838441432604196
+      },
+      "measuredMs": {
+        "P1": 3.218901,
+        "P2": 3.7939,
+        "P3": 3.8299
+      }
+    },
+    {
+      "template": "f1",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 3.9545,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 3.9545,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.037000000000261934,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 3.9545,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.05949999999938882,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 3.9545,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.14249999999992724,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.8397702203408812,
+        "P2": 4.462424312829047,
+        "P3": 4.325867790663104
+      },
+      "measuredMs": {
+        "P1": 3.9545,
+        "P2": 4.7869,
+        "P3": 4.3406
+      }
+    },
+    {
+      "template": "f1",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 3.735701,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 3.735701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.05639999999948486,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 3.735701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.09569999999985157,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 3.735701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.25129999999990105,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.6232892675858297,
+        "P2": 4.222848243558236,
+        "P3": 4.182201205904359
+      },
+      "measuredMs": {
+        "P1": 3.735701,
+        "P2": 4.3477,
+        "P3": 4.284899
+      }
+    },
+    {
+      "template": "f2",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 4.0286,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 4.974201,
+          "regret": 1.2347219877873206,
+          "hit": false,
+          "latencyMs": 0.029199999999946158,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 4.974201,
+          "regret": 1.2347219877873206,
+          "hit": false,
+          "latencyMs": 0.10989999999947031,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 4.0286,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.13510000000042055,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.8635044707908266,
+        "P2": 4.668006758007665,
+        "P3": 4.413582215866812
+      },
+      "measuredMs": {
+        "P1": 4.0286,
+        "P2": 4.974201,
+        "P3": 5.009099
+      }
+    },
+    {
+      "template": "f2",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 3.525599,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 4.373601,
+          "regret": 1.2405270707190466,
+          "hit": false,
+          "latencyMs": 0.01330000000052678,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 4.373601,
+          "regret": 1.2405270707190466,
+          "hit": false,
+          "latencyMs": 0.03960000000006403,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 3.525599,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.049699999999575084,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 3.8635044707908266,
+        "P2": 4.668006758007665,
+        "P3": 4.413582215866812
+      },
+      "measuredMs": {
+        "P1": 3.525599,
+        "P2": 4.373601,
+        "P3": 3.837099
+      }
+    },
+    {
+      "template": "f2",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 9.923,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 11.3236,
+          "regret": 1.141146830595586,
+          "hit": false,
+          "latencyMs": 0.009500000000116415,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 11.3236,
+          "regret": 1.141146830595586,
+          "hit": false,
+          "latencyMs": 0.035899999999855936,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 9.923,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.09400000000005093,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 10.59476396497524,
+        "P2": 10.80274999072843,
+        "P3": 10.63134222748876
+      },
+      "measuredMs": {
+        "P1": 9.923,
+        "P2": 11.3236,
+        "P3": 10.211201
+      }
+    },
+    {
+      "template": "f2",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 10.6014,
+      "oracleId": "P3",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 10.616899,
+          "regret": 1.0014619767200559,
+          "hit": true,
+          "latencyMs": 0.018399999999928696,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 10.616899,
+          "regret": 1.0014619767200559,
+          "hit": true,
+          "latencyMs": 0.04430000000047585,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 10.984799,
+          "regret": 1.0361649404795594,
+          "hit": true,
+          "latencyMs": 0.07549999999991996,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 10.59476396497524,
+        "P2": 10.80274999072843,
+        "P3": 10.63134222748876
+      },
+      "measuredMs": {
+        "P1": 10.984799,
+        "P2": 10.616899,
+        "P3": 10.6014
+      }
+    },
+    {
+      "template": "f2",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 23.420799,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 24.278401,
+          "regret": 1.0366171111412552,
+          "hit": true,
+          "latencyMs": 0.008700000000317232,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 24.278401,
+          "regret": 1.0366171111412552,
+          "hit": true,
+          "latencyMs": 0.03610000000026048,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 23.420799,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.08110000000033324,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 23.60191365833188,
+        "P2": 23.685290895451843,
+        "P3": 23.722840905061872
+      },
+      "measuredMs": {
+        "P1": 23.420799,
+        "P2": 24.278401,
+        "P3": 24.0898
+      }
+    },
+    {
+      "template": "f2",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 22.6258,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 23.1257,
+          "regret": 1.0220942463912877,
+          "hit": true,
+          "latencyMs": 0.01749999999992724,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 23.1257,
+          "regret": 1.0220942463912877,
+          "hit": true,
+          "latencyMs": 0.0342000000000553,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 22.6258,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.052800000000388536,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 23.60191365833188,
+        "P2": 23.685290895451843,
+        "P3": 23.722840905061872
+      },
+      "measuredMs": {
+        "P1": 22.6258,
+        "P2": 23.1257,
+        "P3": 23.826499
+      }
+    },
+    {
+      "template": "f3",
+      "profile": "small_selective",
+      "split": "validation",
+      "candidates": 3,
+      "oracleMs": 2.589399,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 2.589399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.012899999999717693,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 2.589399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.053100000000085856,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 2.589399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.10900000000037835,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 2.541097588857427,
+        "P2": 3.2736369569460413,
+        "P3": 3.040549639600004
+      },
+      "measuredMs": {
+        "P1": 2.589399,
+        "P2": 3.4434,
+        "P3": 3.0489
+      }
+    },
+    {
+      "template": "f3",
+      "profile": "small_broad",
+      "split": "validation",
+      "candidates": 3,
+      "oracleMs": 2.477,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 2.477,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.007100000000718865,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 2.477,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.029499999999643478,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 2.477,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.040600000000267755,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 2.541097588857427,
+        "P2": 3.2736369569460413,
+        "P3": 3.040549639600004
+      },
+      "measuredMs": {
+        "P1": 2.477,
+        "P2": 3.302501,
+        "P3": 2.9283
+      }
+    },
+    {
+      "template": "f3",
+      "profile": "medium_selective",
+      "split": "validation",
+      "candidates": 3,
+      "oracleMs": 2.408899,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 2.408899,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.0052999999998064595,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 2.408899,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.04840000000058353,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 2.408899,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.04320000000006985,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 2.4982170839870825,
+        "P2": 3.095923771491233,
+        "P3": 2.9805120918013546
+      },
+      "measuredMs": {
+        "P1": 2.408899,
+        "P2": 2.978199,
+        "P3": 3.1475
+      }
+    },
+    {
+      "template": "f3",
+      "profile": "medium_broad",
+      "split": "validation",
+      "candidates": 3,
+      "oracleMs": 2.4615,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 2.4615,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.005400000000008731,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 2.4615,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.03499999999985448,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 2.4615,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.047999999999774445,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 2.4982170839870825,
+        "P2": 3.095923771491233,
+        "P3": 2.9805120918013546
+      },
+      "measuredMs": {
+        "P1": 2.4615,
+        "P2": 3.066899,
+        "P3": 2.743599
+      }
+    },
+    {
+      "template": "f3",
+      "profile": "large_selective",
+      "split": "validation",
+      "candidates": 3,
+      "oracleMs": 1.549701,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 1.549701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.005499999999301508,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 1.549701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.027100000000245927,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 1.549701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.03920000000016444,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 1.6060736117168843,
+        "P2": 2.016302969150245,
+        "P3": 1.9099188377358391
+      },
+      "measuredMs": {
+        "P1": 1.549701,
+        "P2": 2.104501,
+        "P3": 1.941499
+      }
+    },
+    {
+      "template": "f3",
+      "profile": "large_broad",
+      "split": "validation",
+      "candidates": 3,
+      "oracleMs": 1.555399,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P1",
+          "ms": 1.555399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.005000000000109139,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P1",
+          "ms": 1.555399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.025300000000243017,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 1.555399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.0363999999999578,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 1.6060736117168843,
+        "P2": 2.016302969150245,
+        "P3": 1.9099188377358391
+      },
+      "measuredMs": {
+        "P1": 1.555399,
+        "P2": 1.9409,
+        "P3": 1.8528
+      }
+    },
+    {
+      "template": "j1",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 4.883399,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 6.4724,
+          "regret": 1.3253883207167796,
+          "hit": false,
+          "latencyMs": 0.03449999999975262,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 4.883399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1477999999997337,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 4.883399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.24609999999938736,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.66801777371194,
+        "P2": 6.716776726517155,
+        "P3": 7.026741758370437,
+        "P4": 7.007725567260949,
+        "P5": 7.278617796854437,
+        "P6": 7.371224695038545,
+        "P7": 5.553284179285844,
+        "P8": 5.557841399526406,
+        "P9": 6.235897428479072,
+        "P10": 6.084775971727668,
+        "P11": 6.265266698338505,
+        "P12": 6.109526101445743
+      },
+      "measuredMs": {
+        "P1": 6.7994,
+        "P2": 6.312,
+        "P3": 6.964899,
+        "P4": 6.652901,
+        "P5": 7.554199,
+        "P6": 7.7744,
+        "P7": 4.883399,
+        "P8": 5.3118,
+        "P9": 6.4724,
+        "P10": 5.439,
+        "P11": 6.382399,
+        "P12": 6.7412
+      }
+    },
+    {
+      "template": "j1",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 5.373301,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 5.555899,
+          "regret": 1.0339824625495577,
+          "hit": true,
+          "latencyMs": 0.0272000000004482,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 5.798201,
+          "regret": 1.0790761582126145,
+          "hit": false,
+          "latencyMs": 0.13730000000032305,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 5.373301,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1698999999998705,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.694247461120401,
+        "P2": 6.930078006754188,
+        "P3": 7.068949343594836,
+        "P4": 7.101577890830224,
+        "P5": 7.278281242890782,
+        "P6": 7.513377221667407,
+        "P7": 5.717549628555695,
+        "P8": 5.563672347376186,
+        "P9": 5.851538962787972,
+        "P10": 5.828453888317058,
+        "P11": 5.9093253472961615,
+        "P12": 5.875080408365231
+      },
+      "measuredMs": {
+        "P1": 6.1099,
+        "P2": 8.1884,
+        "P3": 7.9531,
+        "P4": 6.267201,
+        "P5": 6.568899,
+        "P6": 8.7354,
+        "P7": 6.0904,
+        "P8": 5.373301,
+        "P9": 5.555899,
+        "P10": 5.8092,
+        "P11": 5.798201,
+        "P12": 5.4711
+      }
+    },
+    {
+      "template": "j1",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 9.0219,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 9.721001,
+          "regret": 1.0774893315155343,
+          "hit": false,
+          "latencyMs": 0.030399999999644933,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 9.158899,
+          "regret": 1.0151851605537636,
+          "hit": true,
+          "latencyMs": 0.10760000000027503,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 9.0219,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1801000000004933,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 23.456830291084948,
+        "P2": 22.49511346116053,
+        "P3": 19.24804062526527,
+        "P4": 18.80518170751496,
+        "P5": 23.848215917553905,
+        "P6": 22.500480928295197,
+        "P7": 10.12407899537392,
+        "P8": 10.04113677632073,
+        "P9": 9.830463316392542,
+        "P10": 9.730823760950184,
+        "P11": 9.79190761392838,
+        "P12": 9.880920378705342
+      },
+      "measuredMs": {
+        "P1": 23.484399,
+        "P2": 22.0664,
+        "P3": 18.5895,
+        "P4": 17.5243,
+        "P5": 24.9817,
+        "P6": 21.9846,
+        "P7": 9.158899,
+        "P8": 9.6239,
+        "P9": 9.721001,
+        "P10": 9.0219,
+        "P11": 9.3303,
+        "P12": 9.505001
+      }
+    },
+    {
+      "template": "j1",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 10.569599,
+      "oracleId": "P11",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 10.795101,
+          "regret": 1.021334962660362,
+          "hit": true,
+          "latencyMs": 0.024400000000241562,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 10.569599,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.125,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P12",
+          "ms": 11.910099,
+          "regret": 1.126826003521988,
+          "hit": false,
+          "latencyMs": 0.5113999999994121,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 24.002493882219767,
+        "P2": 23.57801801838,
+        "P3": 19.52138719887068,
+        "P4": 19.184264651541575,
+        "P5": 24.526249513385004,
+        "P6": 23.68033603404841,
+        "P7": 13.181608035039492,
+        "P8": 12.819171587156479,
+        "P9": 12.52196050765921,
+        "P10": 12.492356459127418,
+        "P11": 12.40685443865748,
+        "P12": 12.403659370779925
+      },
+      "measuredMs": {
+        "P1": 24.901901,
+        "P2": 25.129399,
+        "P3": 19.7698,
+        "P4": 19.343099,
+        "P5": 28.0382,
+        "P6": 26.7932,
+        "P7": 14.990699,
+        "P8": 13.168399,
+        "P9": 10.795101,
+        "P10": 11.2925,
+        "P11": 10.569599,
+        "P12": 11.910099
+      }
+    },
+    {
+      "template": "j1",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 15.448901,
+      "oracleId": "P11",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 15.8555,
+          "regret": 1.0263189595169262,
+          "hit": true,
+          "latencyMs": 0.025599999999940337,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 16.800701,
+          "regret": 1.0875013698385407,
+          "hit": false,
+          "latencyMs": 0.13109999999960564,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P11",
+          "ms": 15.448901,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.20690000000013242,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 60.172188201300784,
+        "P2": 56.814916213105036,
+        "P3": 41.70924598705288,
+        "P4": 42.377272187862225,
+        "P5": 60.417183309311056,
+        "P6": 57.01545368165756,
+        "P7": 17.291707689955274,
+        "P8": 16.33352655841138,
+        "P9": 15.999298219340066,
+        "P10": 15.972545290716113,
+        "P11": 15.872592301122218,
+        "P12": 15.911149267015205
+      },
+      "measuredMs": {
+        "P1": 61.5272,
+        "P2": 57.406401,
+        "P3": 38.716101,
+        "P4": 41.203999,
+        "P5": 61.5781,
+        "P6": 57.093701,
+        "P7": 16.800701,
+        "P8": 16.317301,
+        "P9": 15.8555,
+        "P10": 16.051599,
+        "P11": 15.448901,
+        "P12": 15.9092
+      }
+    },
+    {
+      "template": "j1",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 21.544101,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 22.0132,
+          "regret": 1.0217738953229007,
+          "hit": true,
+          "latencyMs": 0.025200000000040745,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P12",
+          "ms": 21.544101,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1000000000003638,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P12",
+          "ms": 21.544101,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.19610000000011496,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 64.00514321258117,
+        "P2": 60.42251256266235,
+        "P3": 43.43892921924905,
+        "P4": 43.586670419592394,
+        "P5": 64.82824751853254,
+        "P6": 61.84755464128524,
+        "P7": 29.474887111269894,
+        "P8": 28.04184743171602,
+        "P9": 23.688223052906803,
+        "P10": 23.440791000925305,
+        "P11": 23.063810857990653,
+        "P12": 22.999853466962566
+      },
+      "measuredMs": {
+        "P1": 67.4044,
+        "P2": 62.1289,
+        "P3": 41.0059,
+        "P4": 42.8014,
+        "P5": 67.703499,
+        "P6": 63.131399,
+        "P7": 31.519701,
+        "P8": 29.495,
+        "P9": 22.0132,
+        "P10": 21.614701,
+        "P11": 21.773601,
+        "P12": 21.544101
+      }
+    },
+    {
+      "template": "j2",
+      "profile": "small_selective",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 6.3494,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 7.703399,
+          "regret": 1.213248338425678,
+          "hit": false,
+          "latencyMs": 0.05069999999977881,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 7.703399,
+          "regret": 1.213248338425678,
+          "hit": false,
+          "latencyMs": 0.11170000000038272,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 6.3494,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.2360000000007858,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.653890968308768,
+        "P2": 6.614043053844335,
+        "P3": 7.086429045972721,
+        "P4": 7.122212745849846,
+        "P5": 7.222685465262326,
+        "P6": 7.2964094676904105,
+        "P7": 6.058281714979802,
+        "P8": 5.854871802778911,
+        "P9": 6.356998782597155,
+        "P10": 6.356370964813133,
+        "P11": 6.4337615527016725,
+        "P12": 6.411763373945975
+      },
+      "measuredMs": {
+        "P1": 6.8049,
+        "P2": 6.479301,
+        "P3": 7.8024,
+        "P4": 8.324701,
+        "P5": 7.612,
+        "P6": 8.159199,
+        "P7": 6.5049,
+        "P8": 6.3494,
+        "P9": 7.703399,
+        "P10": 6.4941,
+        "P11": 7.4055,
+        "P12": 6.3661
+      }
+    },
+    {
+      "template": "j2",
+      "profile": "small_broad",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 5.5041,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 6.8435,
+          "regret": 1.2433458694427788,
+          "hit": false,
+          "latencyMs": 0.023300000000745058,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 6.8435,
+          "regret": 1.2433458694427788,
+          "hit": false,
+          "latencyMs": 0.11799999999948341,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 6.885501,
+          "regret": 1.2509767264402898,
+          "hit": false,
+          "latencyMs": 0.1901000000007116,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.653890968308768,
+        "P2": 6.614043053844335,
+        "P3": 7.086429045972721,
+        "P4": 7.122212745849846,
+        "P5": 7.222685465262326,
+        "P6": 7.2964094676904105,
+        "P7": 6.058281714979802,
+        "P8": 5.854871802778911,
+        "P9": 6.356998782597155,
+        "P10": 6.356370964813133,
+        "P11": 6.4337615527016725,
+        "P12": 6.411763373945975
+      },
+      "measuredMs": {
+        "P1": 6.4316,
+        "P2": 6.331601,
+        "P3": 7.870201,
+        "P4": 6.561701,
+        "P5": 7.098801,
+        "P6": 7.4418,
+        "P7": 5.5041,
+        "P8": 6.885501,
+        "P9": 6.8435,
+        "P10": 6.8988,
+        "P11": 6.178701,
+        "P12": 6.6379
+      }
+    },
+    {
+      "template": "j2",
+      "profile": "medium_selective",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 15.1745,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 15.2554,
+          "regret": 1.0053313123990906,
+          "hit": true,
+          "latencyMs": 0.021800000000439468,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 15.2554,
+          "regret": 1.0053313123990906,
+          "hit": true,
+          "latencyMs": 0.10769999999956781,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 15.358699,
+          "regret": 1.0121387195624238,
+          "hit": true,
+          "latencyMs": 0.1971000000003187,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 22.928715701667674,
+        "P2": 21.738311770402056,
+        "P3": 18.07420752944934,
+        "P4": 17.569590481904743,
+        "P5": 23.457646097180245,
+        "P6": 21.84417632855685,
+        "P7": 12.847447004029076,
+        "P8": 13.031374261118094,
+        "P9": 13.100150123481914,
+        "P10": 13.03661059095369,
+        "P11": 13.147265703846623,
+        "P12": 13.090681573518053
+      },
+      "measuredMs": {
+        "P1": 27.869101,
+        "P2": 25.759999,
+        "P3": 20.9589,
+        "P4": 22.997901,
+        "P5": 29.235101,
+        "P6": 26.4204,
+        "P7": 15.358699,
+        "P8": 15.432401,
+        "P9": 15.2554,
+        "P10": 15.974599,
+        "P11": 16.258801,
+        "P12": 15.1745
+      }
+    },
+    {
+      "template": "j2",
+      "profile": "medium_broad",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 14.5878,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 15.0651,
+          "regret": 1.0327191214576563,
+          "hit": true,
+          "latencyMs": 0.026199999999334977,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 15.0651,
+          "regret": 1.0327191214576563,
+          "hit": true,
+          "latencyMs": 0.15869999999995343,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 16.0782,
+          "regret": 1.102167564677333,
+          "hit": false,
+          "latencyMs": 0.5646000000006097,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 22.928715701667674,
+        "P2": 21.738311770402056,
+        "P3": 18.07420752944934,
+        "P4": 17.569590481904743,
+        "P5": 23.457646097180245,
+        "P6": 21.84417632855685,
+        "P7": 12.847447004029076,
+        "P8": 13.031374261118094,
+        "P9": 13.100150123481914,
+        "P10": 13.03661059095369,
+        "P11": 13.147265703846623,
+        "P12": 13.090681573518053
+      },
+      "measuredMs": {
+        "P1": 27.4861,
+        "P2": 24.281201,
+        "P3": 21.9241,
+        "P4": 21.8269,
+        "P5": 26.716599,
+        "P6": 25.310801,
+        "P7": 16.0782,
+        "P8": 15.2758,
+        "P9": 15.0651,
+        "P10": 14.5878,
+        "P11": 15.019001,
+        "P12": 14.9666
+      }
+    },
+    {
+      "template": "j2",
+      "profile": "large_selective",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 31.304501,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 32.1299,
+          "regret": 1.0263667834858636,
+          "hit": true,
+          "latencyMs": 0.06089999999949214,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 32.1299,
+          "regret": 1.0263667834858636,
+          "hit": true,
+          "latencyMs": 0.16129999999975553,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 31.6851,
+          "regret": 1.0121579641215173,
+          "hit": true,
+          "latencyMs": 0.24279999999998836,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 57.243077940988215,
+        "P2": 54.333559484428264,
+        "P3": 40.13660723141069,
+        "P4": 37.119543501924944,
+        "P5": 57.66724888219002,
+        "P6": 54.65165038190501,
+        "P7": 24.222650253099005,
+        "P8": 24.20505735954721,
+        "P9": 23.091188345949078,
+        "P10": 22.416396262562714,
+        "P11": 24.1496307306008,
+        "P12": 23.92209338899029
+      },
+      "measuredMs": {
+        "P1": 71.467299,
+        "P2": 66.482001,
+        "P3": 50.525099,
+        "P4": 50.537501,
+        "P5": 72.2263,
+        "P6": 68.335099,
+        "P7": 34.524101,
+        "P8": 33.2105,
+        "P9": 32.1299,
+        "P10": 31.6851,
+        "P11": 32.310801,
+        "P12": 31.304501
+      }
+    },
+    {
+      "template": "j2",
+      "profile": "large_broad",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 30.276399,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 31.083101,
+          "regret": 1.026644582138054,
+          "hit": true,
+          "latencyMs": 0.02139999999963038,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 31.083101,
+          "regret": 1.026644582138054,
+          "hit": true,
+          "latencyMs": 0.09839999999985594,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 30.276399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.17749999999978172,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 57.243077940988215,
+        "P2": 54.333559484428264,
+        "P3": 40.13660723141069,
+        "P4": 37.119543501924944,
+        "P5": 57.66724888219002,
+        "P6": 54.65165038190501,
+        "P7": 24.222650253099005,
+        "P8": 24.20505735954721,
+        "P9": 23.091188345949078,
+        "P10": 22.416396262562714,
+        "P11": 24.1496307306008,
+        "P12": 23.92209338899029
+      },
+      "measuredMs": {
+        "P1": 71.8001,
+        "P2": 65.143399,
+        "P3": 52.1069,
+        "P4": 51.8758,
+        "P5": 71.576999,
+        "P6": 66.0477,
+        "P7": 32.6753,
+        "P8": 33.0102,
+        "P9": 31.083101,
+        "P10": 30.276399,
+        "P11": 31.283999,
+        "P12": 31.551901
+      }
+    },
+    {
+      "template": "j3",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 5.317301,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 6.457701,
+          "regret": 1.2144697093506651,
+          "hit": false,
+          "latencyMs": 0.0227999999997337,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 6.457701,
+          "regret": 1.2144697093506651,
+          "hit": false,
+          "latencyMs": 0.2004000000006272,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 5.317301,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.28589999999985594,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.10632877150927,
+        "P2": 6.393978906045813,
+        "P3": 6.70907148053358,
+        "P4": 6.863447953867379,
+        "P5": 6.685342640471331,
+        "P6": 6.846014028068819,
+        "P7": 5.319669222689951,
+        "P8": 5.771012198148407,
+        "P9": 6.14700565971536,
+        "P10": 6.213257207389067,
+        "P11": 6.285662055014698,
+        "P12": 6.375864855188043
+      },
+      "measuredMs": {
+        "P1": 6.2013,
+        "P2": 6.3694,
+        "P3": 6.947499,
+        "P4": 7.634001,
+        "P5": 6.705001,
+        "P6": 7.110501,
+        "P7": 5.317301,
+        "P8": 6.6529,
+        "P9": 6.457701,
+        "P10": 5.839199,
+        "P11": 7.147301,
+        "P12": 7.658601
+      }
+    },
+    {
+      "template": "j3",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 4.5411,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 5.503901,
+          "regret": 1.2120193345224726,
+          "hit": false,
+          "latencyMs": 0.027100000000245927,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 5.503901,
+          "regret": 1.2120193345224726,
+          "hit": false,
+          "latencyMs": 0.0945000000001528,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 4.5411,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1599000000005617,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.10632877150927,
+        "P2": 6.393978906045813,
+        "P3": 6.70907148053358,
+        "P4": 6.863447953867379,
+        "P5": 6.685342640471331,
+        "P6": 6.846014028068819,
+        "P7": 5.319669222689951,
+        "P8": 5.771012198148407,
+        "P9": 6.14700565971536,
+        "P10": 6.213257207389067,
+        "P11": 6.285662055014698,
+        "P12": 6.375864855188043
+      },
+      "measuredMs": {
+        "P1": 5.4384,
+        "P2": 6.321001,
+        "P3": 6.657001,
+        "P4": 6.071499,
+        "P5": 6.0275,
+        "P6": 6.5198,
+        "P7": 4.5411,
+        "P8": 5.0867,
+        "P9": 5.503901,
+        "P10": 5.721101,
+        "P11": 6.1676,
+        "P12": 6.1839
+      }
+    },
+    {
+      "template": "j3",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 8.828299,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 8.828299,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.0342000000000553,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P10",
+          "ms": 10.1144,
+          "regret": 1.1456793658665163,
+          "hit": false,
+          "latencyMs": 0.12770000000000437,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 8.828299,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1871000000001004,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 20.026742072742273,
+        "P2": 23.14032700092651,
+        "P3": 18.983861094230413,
+        "P4": 19.36285743071801,
+        "P5": 20.019258201974644,
+        "P6": 24.28960615558929,
+        "P7": 11.481289090029115,
+        "P8": 11.302458349112412,
+        "P9": 10.881577064009901,
+        "P10": 11.48885676000737,
+        "P11": 11.292510172125748,
+        "P12": 11.529406810713732
+      },
+      "measuredMs": {
+        "P1": 19.418101,
+        "P2": 21.830499,
+        "P3": 18.127201,
+        "P4": 18.7924,
+        "P5": 19.0393,
+        "P6": 24.6114,
+        "P7": 10.499701,
+        "P8": 11.5626,
+        "P9": 8.828299,
+        "P10": 10.1144,
+        "P11": 11.017301,
+        "P12": 10.0541
+      }
+    },
+    {
+      "template": "j3",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 9.987299,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 11.1067,
+          "regret": 1.1120824559272733,
+          "hit": false,
+          "latencyMs": 0.05730000000039581,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P10",
+          "ms": 13.4829,
+          "regret": 1.3500046408944,
+          "hit": false,
+          "latencyMs": 0.5815000000002328,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 11.1067,
+          "regret": 1.1120824559272733,
+          "hit": false,
+          "latencyMs": 0.3654999999998836,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 20.026742072742273,
+        "P2": 23.14032700092651,
+        "P3": 18.983861094230413,
+        "P4": 19.36285743071801,
+        "P5": 20.019258201974644,
+        "P6": 24.28960615558929,
+        "P7": 11.481289090029115,
+        "P8": 11.302458349112412,
+        "P9": 10.881577064009901,
+        "P10": 11.48885676000737,
+        "P11": 11.292510172125748,
+        "P12": 11.529406810713732
+      },
+      "measuredMs": {
+        "P1": 19.6815,
+        "P2": 24.805699,
+        "P3": 19.3933,
+        "P4": 19.607299,
+        "P5": 19.3507,
+        "P6": 27.096199,
+        "P7": 12.1334,
+        "P8": 9.987299,
+        "P9": 11.1067,
+        "P10": 13.4829,
+        "P11": 10.8442,
+        "P12": 12.637799
+      }
+    },
+    {
+      "template": "j3",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 15.2354,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 15.2354,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.03330000000005384,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 15.2354,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.14199999999982538,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 15.2354,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.23390000000017608,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 43.041611174760234,
+        "P2": 57.96747813526662,
+        "P3": 37.9120678351813,
+        "P4": 40.23944206337052,
+        "P5": 42.25267382393662,
+        "P6": 58.551632951859624,
+        "P7": 18.37817458167986,
+        "P8": 19.688561834561902,
+        "P9": 15.746758094227134,
+        "P10": 16.163312861273496,
+        "P11": 18.002142043120998,
+        "P12": 18.357206029825516
+      },
+      "measuredMs": {
+        "P1": 43.509999,
+        "P2": 58.8478,
+        "P3": 36.7853,
+        "P4": 39.87,
+        "P5": 41.686599,
+        "P6": 60.298399,
+        "P7": 18.5319,
+        "P8": 20.0013,
+        "P9": 15.2354,
+        "P10": 15.875701,
+        "P11": 18.671001,
+        "P12": 19.2268
+      }
+    },
+    {
+      "template": "j3",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 14.385499,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 14.385499,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.020000000000436557,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 14.385499,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.08389999999963038,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 14.385499,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1584000000002561,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 43.041611174760234,
+        "P2": 57.96747813526662,
+        "P3": 37.9120678351813,
+        "P4": 40.23944206337052,
+        "P5": 42.25267382393662,
+        "P6": 58.551632951859624,
+        "P7": 18.37817458167986,
+        "P8": 19.688561834561902,
+        "P9": 15.746758094227134,
+        "P10": 16.163312861273496,
+        "P11": 18.002142043120998,
+        "P12": 18.357206029825516
+      },
+      "measuredMs": {
+        "P1": 41.6268,
+        "P2": 56.8935,
+        "P3": 37.2544,
+        "P4": 40.122501,
+        "P5": 42.212199,
+        "P6": 58.087199,
+        "P7": 17.929999,
+        "P8": 18.9566,
+        "P9": 14.385499,
+        "P10": 15.152,
+        "P11": 17.7263,
+        "P12": 17.9878
+      }
+    },
+    {
+      "template": "j4",
+      "profile": "small_selective",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 5.8678,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 6.736799,
+          "regret": 1.1480962200483997,
+          "hit": false,
+          "latencyMs": 0.0239000000001397,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 6.736799,
+          "regret": 1.1480962200483997,
+          "hit": false,
+          "latencyMs": 0.18180000000029395,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 5.8678,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.23469999999997526,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.653890968308768,
+        "P2": 6.614043053844335,
+        "P3": 7.086429045972721,
+        "P4": 7.122212745849846,
+        "P5": 7.222685465262326,
+        "P6": 7.2964094676904105,
+        "P7": 6.058281714979802,
+        "P8": 5.854871802778911,
+        "P9": 6.356998782597155,
+        "P10": 6.356370964813133,
+        "P11": 6.4337615527016725,
+        "P12": 6.411763373945975
+      },
+      "measuredMs": {
+        "P1": 6.6024,
+        "P2": 7.452401,
+        "P3": 6.959001,
+        "P4": 7.6584,
+        "P5": 7.916601,
+        "P6": 7.7589,
+        "P7": 6.974299,
+        "P8": 5.8678,
+        "P9": 6.736799,
+        "P10": 6.934699,
+        "P11": 6.780899,
+        "P12": 6.821401
+      }
+    },
+    {
+      "template": "j4",
+      "profile": "small_broad",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 5.867999,
+      "oracleId": "P2",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 5.999201,
+          "regret": 1.0223588995158315,
+          "hit": true,
+          "latencyMs": 0.02570000000014261,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 5.999201,
+          "regret": 1.0223588995158315,
+          "hit": true,
+          "latencyMs": 0.1080999999994674,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 6.636199,
+          "regret": 1.130913451075912,
+          "hit": false,
+          "latencyMs": 0.14500000000043656,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.653890968308768,
+        "P2": 6.614043053844335,
+        "P3": 7.086429045972721,
+        "P4": 7.122212745849846,
+        "P5": 7.222685465262326,
+        "P6": 7.2964094676904105,
+        "P7": 6.058281714979802,
+        "P8": 5.854871802778911,
+        "P9": 6.356998782597155,
+        "P10": 6.356370964813133,
+        "P11": 6.4337615527016725,
+        "P12": 6.411763373945975
+      },
+      "measuredMs": {
+        "P1": 7.152101,
+        "P2": 5.867999,
+        "P3": 6.588901,
+        "P4": 7.025099,
+        "P5": 7.344199,
+        "P6": 7.390201,
+        "P7": 6.245501,
+        "P8": 6.636199,
+        "P9": 5.999201,
+        "P10": 6.114399,
+        "P11": 6.3502,
+        "P12": 6.2132
+      }
+    },
+    {
+      "template": "j4",
+      "profile": "medium_selective",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 12.250901,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 12.7152,
+          "regret": 1.0378991716609252,
+          "hit": true,
+          "latencyMs": 0.01680000000033033,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 12.7152,
+          "regret": 1.0378991716609252,
+          "hit": true,
+          "latencyMs": 0.10319999999956053,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 12.250901,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.5155999999997221,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 22.972949117637278,
+        "P2": 21.893220927158147,
+        "P3": 18.173615986906604,
+        "P4": 17.665042130802544,
+        "P5": 23.608239184274943,
+        "P6": 22.04384163323602,
+        "P7": 12.751541229970758,
+        "P8": 12.851240312268606,
+        "P9": 13.024425576601855,
+        "P10": 12.856409418412984,
+        "P11": 13.071288123775922,
+        "P12": 12.902790188093961
+      },
+      "measuredMs": {
+        "P1": 22.002399,
+        "P2": 21.418001,
+        "P3": 16.9284,
+        "P4": 16.446,
+        "P5": 24.6629,
+        "P6": 20.304201,
+        "P7": 12.250901,
+        "P8": 12.2645,
+        "P9": 12.7152,
+        "P10": 12.791401,
+        "P11": 13.5036,
+        "P12": 15.2193
+      }
+    },
+    {
+      "template": "j4",
+      "profile": "medium_broad",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 11.5371,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 12.9759,
+          "regret": 1.1247107158644718,
+          "hit": false,
+          "latencyMs": 0.05059999999957654,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 12.9759,
+          "regret": 1.1247107158644718,
+          "hit": false,
+          "latencyMs": 0.12770000000000437,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 11.5371,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.16219999999975698,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 22.972949117637278,
+        "P2": 21.893220927158147,
+        "P3": 18.173615986906604,
+        "P4": 17.665042130802544,
+        "P5": 23.608239184274943,
+        "P6": 22.04384163323602,
+        "P7": 12.751541229970758,
+        "P8": 12.851240312268606,
+        "P9": 13.024425576601855,
+        "P10": 12.856409418412984,
+        "P11": 13.071288123775922,
+        "P12": 12.902790188093961
+      },
+      "measuredMs": {
+        "P1": 23.2207,
+        "P2": 20.191101,
+        "P3": 17.536501,
+        "P4": 14.825099,
+        "P5": 21.7353,
+        "P6": 21.8691,
+        "P7": 11.5371,
+        "P8": 12.0061,
+        "P9": 12.9759,
+        "P10": 11.553,
+        "P11": 13.1645,
+        "P12": 12.493399
+      }
+    },
+    {
+      "template": "j4",
+      "profile": "large_selective",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 23.2255,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 24.1211,
+          "regret": 1.0385610643473768,
+          "hit": true,
+          "latencyMs": 0.017600000000129512,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 24.1211,
+          "regret": 1.0385610643473768,
+          "hit": true,
+          "latencyMs": 0.1147000000000844,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 23.2255,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1871000000001004,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 56.66087289279851,
+        "P2": 53.62513125225575,
+        "P3": 40.13660723141069,
+        "P4": 37.119543501924944,
+        "P5": 56.941025373521946,
+        "P6": 53.80693204510465,
+        "P7": 24.765068968106505,
+        "P8": 25.149487078340684,
+        "P9": 24.43716021382531,
+        "P10": 24.010801681548507,
+        "P11": 25.033755796897445,
+        "P12": 24.986629809349104
+      },
+      "measuredMs": {
+        "P1": 54.0036,
+        "P2": 50.9086,
+        "P3": 40.1469,
+        "P4": 33.8594,
+        "P5": 55.2658,
+        "P6": 50.007901,
+        "P7": 24.501999,
+        "P8": 25.469601,
+        "P9": 24.1211,
+        "P10": 23.2255,
+        "P11": 25.4936,
+        "P12": 24.869701
+      }
+    },
+    {
+      "template": "j4",
+      "profile": "large_broad",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 22.6261,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 23.4939,
+          "regret": 1.0383539363832035,
+          "hit": true,
+          "latencyMs": 0.01929999999993015,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 23.4939,
+          "regret": 1.0383539363832035,
+          "hit": true,
+          "latencyMs": 0.09940000000005966,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 22.6261,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.14829999999983556,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 56.66087289279851,
+        "P2": 53.62513125225575,
+        "P3": 40.13660723141069,
+        "P4": 37.119543501924944,
+        "P5": 56.941025373521946,
+        "P6": 53.80693204510465,
+        "P7": 24.765068968106505,
+        "P8": 25.149487078340684,
+        "P9": 24.43716021382531,
+        "P10": 24.010801681548507,
+        "P11": 25.033755796897445,
+        "P12": 24.986629809349104
+      },
+      "measuredMs": {
+        "P1": 56.1993,
+        "P2": 51.2016,
+        "P3": 40.471999,
+        "P4": 36.000299,
+        "P5": 56.6418,
+        "P6": 51.4445,
+        "P7": 24.547801,
+        "P8": 24.9238,
+        "P9": 23.4939,
+        "P10": 22.6261,
+        "P11": 25.514101,
+        "P12": 26.1037
+      }
+    },
+    {
+      "template": "j5",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 5.823,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 9.4563,
+          "regret": 1.6239567233384853,
+          "hit": false,
+          "latencyMs": 0.023699999999735155,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 5.8367,
+          "regret": 1.0023527391379015,
+          "hit": true,
+          "latencyMs": 0.14460000000053697,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 5.823,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1746000000002823,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.532125503544968,
+        "P2": 6.332655532752069,
+        "P3": 7.915855171025302,
+        "P4": 7.469303127363378,
+        "P5": 7.347982253134067,
+        "P6": 6.7379350202777655,
+        "P7": 5.940752223494339,
+        "P8": 5.782550359798897,
+        "P9": 7.850470819502225,
+        "P10": 7.471104649955383,
+        "P11": 7.290550258810394,
+        "P12": 7.792470968863179
+      },
+      "measuredMs": {
+        "P1": 6.8803,
+        "P2": 6.400799,
+        "P3": 8.843701,
+        "P4": 8.039399,
+        "P5": 8.207599,
+        "P6": 6.767099,
+        "P7": 5.8367,
+        "P8": 5.823,
+        "P9": 9.4563,
+        "P10": 7.267701,
+        "P11": 6.7498,
+        "P12": 9.5441
+      }
+    },
+    {
+      "template": "j5",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 5.300399,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 6.7527,
+          "regret": 1.2739984291748603,
+          "hit": false,
+          "latencyMs": 0.01739999999972497,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 5.9617,
+          "regret": 1.1247643809456611,
+          "hit": false,
+          "latencyMs": 0.11340000000018335,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 5.300399,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.4279999999998836,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.532125503544968,
+        "P2": 6.332655532752069,
+        "P3": 7.915855171025302,
+        "P4": 7.469303127363378,
+        "P5": 7.347982253134067,
+        "P6": 6.7379350202777655,
+        "P7": 5.940752223494339,
+        "P8": 5.782550359798897,
+        "P9": 7.850470819502225,
+        "P10": 7.471104649955383,
+        "P11": 7.290550258810394,
+        "P12": 7.792470968863179
+      },
+      "measuredMs": {
+        "P1": 6.087699,
+        "P2": 6.3947,
+        "P3": 7.9842,
+        "P4": 7.0518,
+        "P5": 6.756199,
+        "P6": 6.159699,
+        "P7": 5.9617,
+        "P8": 5.300399,
+        "P9": 6.7527,
+        "P10": 7.0165,
+        "P11": 7.2827,
+        "P12": 7.348799
+      }
+    },
+    {
+      "template": "j5",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 13.6431,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 15.2884,
+          "regret": 1.1205957590283733,
+          "hit": false,
+          "latencyMs": 0.02050000000053842,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 13.8463,
+          "regret": 1.014893975709333,
+          "hit": true,
+          "latencyMs": 0.11409999999978027,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 13.8463,
+          "regret": 1.014893975709333,
+          "hit": true,
+          "latencyMs": 0.15059999999994034,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 23.298988872894626,
+        "P2": 20.64624033384554,
+        "P3": 21.873490086376727,
+        "P4": 20.705605168987574,
+        "P5": 24.495847448186222,
+        "P6": 21.062183655347386,
+        "P7": 13.79703589298495,
+        "P8": 13.960431820700467,
+        "P9": 14.334166635295778,
+        "P10": 14.34310997784517,
+        "P11": 14.437337443782752,
+        "P12": 14.410856781729231
+      },
+      "measuredMs": {
+        "P1": 22.945,
+        "P2": 19.184199,
+        "P3": 21.761301,
+        "P4": 20.833599,
+        "P5": 24.507601,
+        "P6": 19.9594,
+        "P7": 13.8463,
+        "P8": 13.8363,
+        "P9": 15.2884,
+        "P10": 13.7244,
+        "P11": 14.8372,
+        "P12": 13.6431
+      }
+    },
+    {
+      "template": "j5",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 13.4227,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 14.277901,
+          "regret": 1.0637130383603894,
+          "hit": false,
+          "latencyMs": 0.01589999999941938,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 13.4227,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.10650000000077853,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 13.4227,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.12799999999970169,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 23.298988872894626,
+        "P2": 20.64624033384554,
+        "P3": 21.873490086376727,
+        "P4": 20.705605168987574,
+        "P5": 24.495847448186222,
+        "P6": 21.062183655347386,
+        "P7": 13.79703589298495,
+        "P8": 13.960431820700467,
+        "P9": 14.334166635295778,
+        "P10": 14.34310997784517,
+        "P11": 14.437337443782752,
+        "P12": 14.410856781729231
+      },
+      "measuredMs": {
+        "P1": 23.988001,
+        "P2": 22.080201,
+        "P3": 22.614299,
+        "P4": 21.274801,
+        "P5": 26.121799,
+        "P6": 22.436701,
+        "P7": 13.4227,
+        "P8": 15.996599,
+        "P9": 14.277901,
+        "P10": 14.5735,
+        "P11": 14.8708,
+        "P12": 15.854899
+      }
+    },
+    {
+      "template": "j5",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 25.7021,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 27.113599,
+          "regret": 1.0549176526431692,
+          "hit": false,
+          "latencyMs": 0.0158000000001266,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 26.7797,
+          "regret": 1.0419265351858407,
+          "hit": true,
+          "latencyMs": 0.1087999999999738,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P12",
+          "ms": 25.7021,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.15679999999974825,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 59.599762424335886,
+        "P2": 43.53591005758289,
+        "P3": 48.256926060763966,
+        "P4": 43.50514577377931,
+        "P5": 60.8246549210899,
+        "P6": 43.500939116906764,
+        "P7": 26.407159440653402,
+        "P8": 26.276540499901227,
+        "P9": 26.762885378745658,
+        "P10": 26.31662103707865,
+        "P11": 26.28099332399515,
+        "P12": 25.9723481156597
+      },
+      "measuredMs": {
+        "P1": 61.4253,
+        "P2": 44.722701,
+        "P3": 48.584099,
+        "P4": 43.1485,
+        "P5": 60.799699,
+        "P6": 42.9884,
+        "P7": 26.7797,
+        "P8": 26.677099,
+        "P9": 27.113599,
+        "P10": 26.016301,
+        "P11": 25.8053,
+        "P12": 25.7021
+      }
+    },
+    {
+      "template": "j5",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 25.8132,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 27.5967,
+          "regret": 1.069092557296267,
+          "hit": false,
+          "latencyMs": 0.01720000000022992,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 26.8252,
+          "regret": 1.039204747958409,
+          "hit": true,
+          "latencyMs": 0.113999999999578,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P12",
+          "ms": 25.8132,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.13609999999971478,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 59.599762424335886,
+        "P2": 43.53591005758289,
+        "P3": 48.256926060763966,
+        "P4": 43.50514577377931,
+        "P5": 60.8246549210899,
+        "P6": 43.500939116906764,
+        "P7": 26.407159440653402,
+        "P8": 26.276540499901227,
+        "P9": 26.762885378745658,
+        "P10": 26.31662103707865,
+        "P11": 26.28099332399515,
+        "P12": 25.9723481156597
+      },
+      "measuredMs": {
+        "P1": 60.287,
+        "P2": 43.0902,
+        "P3": 48.629001,
+        "P4": 42.5821,
+        "P5": 59.6942,
+        "P6": 43.3731,
+        "P7": 26.8252,
+        "P8": 26.8538,
+        "P9": 27.5967,
+        "P10": 28.0372,
+        "P11": 27.037101,
+        "P12": 25.8132
+      }
+    },
+    {
+      "template": "p1",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 5.2445,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 5.747901,
+          "regret": 1.0959864620078177,
+          "hit": false,
+          "latencyMs": 0.021000000000640284,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 6.3367,
+          "regret": 1.2082562684717324,
+          "hit": false,
+          "latencyMs": 0.08070000000043365,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 6.076001,
+          "regret": 1.1585472399656782,
+          "hit": false,
+          "latencyMs": 0.14660000000003492,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.57913671677205,
+        "P2": 6.547274146550428,
+        "P3": 7.010810422562977,
+        "P4": 6.98399691940765,
+        "P5": 7.127413864894669,
+        "P6": 7.1922442515382174,
+        "P7": 5.540568176135599,
+        "P8": 5.534951046860078,
+        "P9": 6.24298574749494,
+        "P10": 6.286119641136563,
+        "P11": 6.182424585839619,
+        "P12": 6.216450771088946
+      },
+      "measuredMs": {
+        "P1": 6.895401,
+        "P2": 6.550899,
+        "P3": 7.407999,
+        "P4": 7.2617,
+        "P5": 7.0285,
+        "P6": 6.509001,
+        "P7": 5.2445,
+        "P8": 6.076001,
+        "P9": 5.747901,
+        "P10": 5.962699,
+        "P11": 6.3367,
+        "P12": 5.588301
+      }
+    },
+    {
+      "template": "p1",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 4.700601,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 7.250201,
+          "regret": 1.5423987273116777,
+          "hit": false,
+          "latencyMs": 0.016400000000430737,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 5.420499,
+          "regret": 1.153150203559077,
+          "hit": false,
+          "latencyMs": 0.07439999999951397,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 4.700601,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.44759999999951106,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 6.57913671677205,
+        "P2": 6.547274146550428,
+        "P3": 7.010810422562977,
+        "P4": 6.98399691940765,
+        "P5": 7.127413864894669,
+        "P6": 7.1922442515382174,
+        "P7": 5.540568176135599,
+        "P8": 5.534951046860078,
+        "P9": 6.24298574749494,
+        "P10": 6.286119641136563,
+        "P11": 6.182424585839619,
+        "P12": 6.216450771088946
+      },
+      "measuredMs": {
+        "P1": 6.328301,
+        "P2": 6.071301,
+        "P3": 6.4707,
+        "P4": 7.153499,
+        "P5": 7.2041,
+        "P6": 7.288201,
+        "P7": 5.1139,
+        "P8": 4.700601,
+        "P9": 7.250201,
+        "P10": 7.204301,
+        "P11": 5.420499,
+        "P12": 6.387401
+      }
+    },
+    {
+      "template": "p1",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 13.360801,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 13.644,
+          "regret": 1.0211962591165005,
+          "hit": true,
+          "latencyMs": 0.019800000000032014,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 13.8181,
+          "regret": 1.0342269149881058,
+          "hit": true,
+          "latencyMs": 0.10519999999996799,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P12",
+          "ms": 13.360801,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.17600000000038563,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 23.199510942607084,
+        "P2": 22.138727120707273,
+        "P3": 19.2736478439251,
+        "P4": 18.802167477376983,
+        "P5": 23.737357039096644,
+        "P6": 22.294010594175372,
+        "P7": 13.431416194100978,
+        "P8": 13.34386739992989,
+        "P9": 13.270765128805577,
+        "P10": 13.18736808288479,
+        "P11": 13.200774688068854,
+        "P12": 13.114532769183883
+      },
+      "measuredMs": {
+        "P1": 22.9252,
+        "P2": 21.443401,
+        "P3": 18.698801,
+        "P4": 19.585501,
+        "P5": 25.390699,
+        "P6": 22.743601,
+        "P7": 14.5231,
+        "P8": 13.560401,
+        "P9": 13.644,
+        "P10": 13.6988,
+        "P11": 13.8181,
+        "P12": 13.360801
+      }
+    },
+    {
+      "template": "p1",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 12.569299,
+      "oracleId": "P11",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 13.6892,
+          "regret": 1.089098127111146,
+          "hit": false,
+          "latencyMs": 0.016700000000128057,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 12.569299,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.08579999999983556,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P12",
+          "ms": 13.306999,
+          "regret": 1.0586906238764786,
+          "hit": false,
+          "latencyMs": 0.12380000000030122,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 23.199510942607084,
+        "P2": 22.138727120707273,
+        "P3": 19.2736478439251,
+        "P4": 18.802167477376983,
+        "P5": 23.737357039096644,
+        "P6": 22.294010594175372,
+        "P7": 13.431416194100978,
+        "P8": 13.34386739992989,
+        "P9": 13.270765128805577,
+        "P10": 13.18736808288479,
+        "P11": 13.200774688068854,
+        "P12": 13.114532769183883
+      },
+      "measuredMs": {
+        "P1": 22.5419,
+        "P2": 21.8455,
+        "P3": 20.119601,
+        "P4": 16.7511,
+        "P5": 24.5526,
+        "P6": 23.298201,
+        "P7": 14.4984,
+        "P8": 13.947,
+        "P9": 13.6892,
+        "P10": 13.32,
+        "P11": 12.569299,
+        "P12": 13.306999
+      }
+    },
+    {
+      "template": "p1",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 30.4661,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 30.5218,
+          "regret": 1.001828261575981,
+          "hit": true,
+          "latencyMs": 0.015300000000024738,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 30.6043,
+          "regret": 1.0045361894039604,
+          "hit": true,
+          "latencyMs": 0.07240000000001601,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P11",
+          "ms": 30.6043,
+          "regret": 1.0045361894039604,
+          "hit": true,
+          "latencyMs": 0.15839999999934662,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 61.723851327227905,
+        "P2": 58.688161930579824,
+        "P3": 49.06141102290472,
+        "P4": 46.92643441114484,
+        "P5": 63.04164985080452,
+        "P6": 60.236539977479836,
+        "P7": 32.105362464698956,
+        "P8": 33.40082832469045,
+        "P9": 30.675709578187288,
+        "P10": 31.30545966275447,
+        "P11": 30.20250201621332,
+        "P12": 30.801063684587294
+      },
+      "measuredMs": {
+        "P1": 63.063,
+        "P2": 56.658699,
+        "P3": 51.888799,
+        "P4": 46.718,
+        "P5": 63.578799,
+        "P6": 60.529001,
+        "P7": 31.667101,
+        "P8": 34.1503,
+        "P9": 30.5218,
+        "P10": 30.4661,
+        "P11": 30.6043,
+        "P12": 30.9556
+      }
+    },
+    {
+      "template": "p1",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 30.554099,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 31.844101,
+          "regret": 1.0422202598741332,
+          "hit": true,
+          "latencyMs": 0.014999999999417923,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 32.567801,
+          "regret": 1.0659061162301007,
+          "hit": false,
+          "latencyMs": 0.07300000000032014,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P11",
+          "ms": 32.567801,
+          "regret": 1.0659061162301007,
+          "hit": false,
+          "latencyMs": 0.13029999999980646,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 61.723851327227905,
+        "P2": 58.688161930579824,
+        "P3": 49.06141102290472,
+        "P4": 46.92643441114484,
+        "P5": 63.04164985080452,
+        "P6": 60.236539977479836,
+        "P7": 32.105362464698956,
+        "P8": 33.40082832469045,
+        "P9": 30.675709578187288,
+        "P10": 31.30545966275447,
+        "P11": 30.20250201621332,
+        "P12": 30.801063684587294
+      },
+      "measuredMs": {
+        "P1": 61.544099,
+        "P2": 57.756999,
+        "P3": 52.152,
+        "P4": 48.5157,
+        "P5": 67.191899,
+        "P6": 61.2321,
+        "P7": 31.954299,
+        "P8": 35.626501,
+        "P9": 31.844101,
+        "P10": 32.616199,
+        "P11": 32.567801,
+        "P12": 30.554099
+      }
+    },
+    {
+      "template": "p2",
+      "profile": "small_selective",
+      "split": "test",
+      "candidates": 6,
+      "oracleMs": 7.409699,
+      "oracleId": "P2",
+      "picks": {
+        "A": {
+          "id": "P3",
+          "ms": 7.5611,
+          "regret": 1.020432813802558,
+          "hit": true,
+          "latencyMs": 0.012200000000120781,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P3",
+          "ms": 7.5611,
+          "regret": 1.020432813802558,
+          "hit": true,
+          "latencyMs": 0.08910000000014406,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 7.6009,
+          "regret": 1.0258041520984862,
+          "hit": true,
+          "latencyMs": 0.10540000000037253,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 7.143212983032088,
+        "P2": 7.268866830329534,
+        "P3": 7.631277396641447,
+        "P4": 7.706175859407837,
+        "P5": 7.684385757060206,
+        "P6": 7.883725341731983
+      },
+      "measuredMs": {
+        "P1": 7.6009,
+        "P2": 7.409699,
+        "P3": 7.5611,
+        "P4": 7.538101,
+        "P5": 7.954901,
+        "P6": 8.216501
+      }
+    },
+    {
+      "template": "p2",
+      "profile": "small_broad",
+      "split": "test",
+      "candidates": 6,
+      "oracleMs": 6.7996,
+      "oracleId": "P2",
+      "picks": {
+        "A": {
+          "id": "P3",
+          "ms": 7.634901,
+          "regret": 1.1228456085652099,
+          "hit": false,
+          "latencyMs": 0.009500000000116415,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P3",
+          "ms": 7.634901,
+          "regret": 1.1228456085652099,
+          "hit": false,
+          "latencyMs": 0.04379999999946449,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 7.2556,
+          "regret": 1.067062768398141,
+          "hit": false,
+          "latencyMs": 0.05779999999958818,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 7.143212983032088,
+        "P2": 7.268866830329534,
+        "P3": 7.631277396641447,
+        "P4": 7.706175859407837,
+        "P5": 7.684385757060206,
+        "P6": 7.883725341731983
+      },
+      "measuredMs": {
+        "P1": 7.2556,
+        "P2": 6.7996,
+        "P3": 7.634901,
+        "P4": 7.568899,
+        "P5": 8.4707,
+        "P6": 7.377799
+      }
+    },
+    {
+      "template": "p2",
+      "profile": "medium_selective",
+      "split": "test",
+      "candidates": 6,
+      "oracleMs": 25.0209,
+      "oracleId": "P3",
+      "picks": {
+        "A": {
+          "id": "P3",
+          "ms": 25.0209,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.007300000000213913,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P3",
+          "ms": 25.0209,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.04070000000047003,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P4",
+          "ms": 25.062799,
+          "regret": 1.0016745600677832,
+          "hit": true,
+          "latencyMs": 0.07570000000032451,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 25.066101369227546,
+        "P2": 24.97795051892151,
+        "P3": 18.853151148044763,
+        "P4": 18.692432466985622,
+        "P5": 25.285669569658964,
+        "P6": 24.86707868032045
+      },
+      "measuredMs": {
+        "P1": 33.594201,
+        "P2": 34.3903,
+        "P3": 25.0209,
+        "P4": 25.062799,
+        "P5": 38.024001,
+        "P6": 31.2381
+      }
+    },
+    {
+      "template": "p2",
+      "profile": "medium_broad",
+      "split": "test",
+      "candidates": 6,
+      "oracleMs": 26.6423,
+      "oracleId": "P4",
+      "picks": {
+        "A": {
+          "id": "P3",
+          "ms": 26.903701,
+          "regret": 1.0098115027606476,
+          "hit": true,
+          "latencyMs": 0.009900000000016007,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P3",
+          "ms": 26.903701,
+          "regret": 1.0098115027606476,
+          "hit": true,
+          "latencyMs": 0.042699999999967986,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P4",
+          "ms": 26.6423,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.08870000000024447,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 25.066101369227546,
+        "P2": 24.97795051892151,
+        "P3": 18.853151148044763,
+        "P4": 18.692432466985622,
+        "P5": 25.285669569658964,
+        "P6": 24.86707868032045
+      },
+      "measuredMs": {
+        "P1": 32.949,
+        "P2": 32.040801,
+        "P3": 26.903701,
+        "P4": 26.6423,
+        "P5": 34.6651,
+        "P6": 32.5293
+      }
+    },
+    {
+      "template": "p2",
+      "profile": "large_selective",
+      "split": "test",
+      "candidates": 6,
+      "oracleMs": 62.383799,
+      "oracleId": "P3",
+      "picks": {
+        "A": {
+          "id": "P3",
+          "ms": 62.383799,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.4650000000001455,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P3",
+          "ms": 62.383799,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.23589999999967404,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P4",
+          "ms": 63.631001,
+          "regret": 1.0199924021940374,
+          "hit": true,
+          "latencyMs": 0.3379000000004453,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 64.51832231773291,
+        "P2": 61.25991052378955,
+        "P3": 42.09078974188558,
+        "P4": 40.47984934535194,
+        "P5": 64.92969824463117,
+        "P6": 62.26312356635165
+      },
+      "measuredMs": {
+        "P1": 84.849601,
+        "P2": 77.662699,
+        "P3": 62.383799,
+        "P4": 63.631001,
+        "P5": 93.2917,
+        "P6": 80.287401
+      }
+    },
+    {
+      "template": "p2",
+      "profile": "large_broad",
+      "split": "test",
+      "candidates": 6,
+      "oracleMs": 64.7175,
+      "oracleId": "P4",
+      "picks": {
+        "A": {
+          "id": "P3",
+          "ms": 65.828301,
+          "regret": 1.0171638428554872,
+          "hit": true,
+          "latencyMs": 0.02540000000044529,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P3",
+          "ms": 65.828301,
+          "regret": 1.0171638428554872,
+          "hit": true,
+          "latencyMs": 0.10260000000016589,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P4",
+          "ms": 64.7175,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.15869999999995343,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 64.51832231773291,
+        "P2": 61.25991052378955,
+        "P3": 42.09078974188558,
+        "P4": 40.47984934535194,
+        "P5": 64.92969824463117,
+        "P6": 62.26312356635165
+      },
+      "measuredMs": {
+        "P1": 90.7389,
+        "P2": 80.296699,
+        "P3": 65.828301,
+        "P4": 64.7175,
+        "P5": 92.815901,
+        "P6": 82.205901
+      }
+    },
+    {
+      "template": "g1",
+      "profile": "small_selective",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 9.878901,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 10.9548,
+          "regret": 1.1089087743667032,
+          "hit": false,
+          "latencyMs": 0.07330000000001746,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 10.157701,
+          "regret": 1.0282217627244163,
+          "hit": true,
+          "latencyMs": 0.26119999999991705,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 10.157701,
+          "regret": 1.0282217627244163,
+          "hit": true,
+          "latencyMs": 0.2687999999998283,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 14.72310082326739,
+        "P2": 14.249132434495547,
+        "P3": 14.936119158451623,
+        "P4": 14.486008876341032,
+        "P5": 15.189267734208801,
+        "P6": 14.605112833606114,
+        "P7": 13.408465024722993,
+        "P8": 14.015382566703504,
+        "P9": 13.515503063557087,
+        "P10": 14.38816454292257,
+        "P11": 13.492990801682474,
+        "P12": 14.395112233486206
+      },
+      "measuredMs": {
+        "P1": 11.4756,
+        "P2": 10.9867,
+        "P3": 10.745601,
+        "P4": 12.9318,
+        "P5": 12.583699,
+        "P6": 11.911599,
+        "P7": 10.157701,
+        "P8": 10.5639,
+        "P9": 10.9548,
+        "P10": 9.878901,
+        "P11": 11.307099,
+        "P12": 12.715201
+      }
+    },
+    {
+      "template": "g1",
+      "profile": "small_broad",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 9.8577,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 11.014501,
+          "regret": 1.1173499903628634,
+          "hit": false,
+          "latencyMs": 0.02449999999953434,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 11.014501,
+          "regret": 1.1173499903628634,
+          "hit": false,
+          "latencyMs": 0.1540000000004511,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 9.8577,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1837999999997919,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 13.37394101663001,
+        "P2": 13.129924465302485,
+        "P3": 13.494230637590688,
+        "P4": 13.279919116090802,
+        "P5": 13.717671186720821,
+        "P6": 13.375792206928487,
+        "P7": 13.452448146795344,
+        "P8": 13.048166242580322,
+        "P9": 13.505093666340404,
+        "P10": 13.192230024660489,
+        "P11": 13.510120464808898,
+        "P12": 13.207125253421463
+      },
+      "measuredMs": {
+        "P1": 11.798099,
+        "P2": 11.057,
+        "P3": 12.282301,
+        "P4": 11.6245,
+        "P5": 12.338999,
+        "P6": 11.4952,
+        "P7": 10.2262,
+        "P8": 9.8577,
+        "P9": 11.014501,
+        "P10": 11.8909,
+        "P11": 11.770501,
+        "P12": 11.096999
+      }
+    },
+    {
+      "template": "g1",
+      "profile": "medium_selective",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 14.2106,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 14.5925,
+          "regret": 1.0268743050961957,
+          "hit": true,
+          "latencyMs": 0.02430000000003929,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 16.6452,
+          "regret": 1.1713228153631796,
+          "hit": false,
+          "latencyMs": 0.183100000000195,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 14.5767,
+          "regret": 1.0257624590094718,
+          "hit": true,
+          "latencyMs": 0.2125000000005457,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 27.91259218126266,
+        "P2": 27.100726594246684,
+        "P3": 23.078925376032437,
+        "P4": 22.65855702387384,
+        "P5": 27.536473761664055,
+        "P6": 26.950997384286755,
+        "P7": 18.004362913318907,
+        "P8": 17.707504189472537,
+        "P9": 17.411935230795297,
+        "P10": 17.22719681790901,
+        "P11": 17.558358571036145,
+        "P12": 17.4300949252965
+      },
+      "measuredMs": {
+        "P1": 27.4515,
+        "P2": 27.4768,
+        "P3": 23.750399,
+        "P4": 21.835599,
+        "P5": 30.7396,
+        "P6": 28.439101,
+        "P7": 16.6452,
+        "P8": 14.2106,
+        "P9": 14.5925,
+        "P10": 14.5767,
+        "P11": 14.4591,
+        "P12": 16.593399
+      }
+    },
+    {
+      "template": "g1",
+      "profile": "medium_broad",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 16.9976,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 19.048399,
+          "regret": 1.1206522685555609,
+          "hit": false,
+          "latencyMs": 0.022100000000136788,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 19.048399,
+          "regret": 1.1206522685555609,
+          "hit": false,
+          "latencyMs": 0.16790000000037253,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 19.048399,
+          "regret": 1.1206522685555609,
+          "hit": false,
+          "latencyMs": 0.15719999999964784,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 27.77184032897341,
+        "P2": 26.76662666639309,
+        "P3": 22.751673374382364,
+        "P4": 22.49678127333779,
+        "P5": 27.392507088253414,
+        "P6": 26.958213168051714,
+        "P7": 19.032009779152464,
+        "P8": 18.808047225450892,
+        "P9": 17.992729334763634,
+        "P10": 18.08392899403817,
+        "P11": 18.04954021921404,
+        "P12": 18.23301509053372
+      },
+      "measuredMs": {
+        "P1": 33.799601,
+        "P2": 31.957901,
+        "P3": 26.5835,
+        "P4": 22.7916,
+        "P5": 35.1629,
+        "P6": 31.691901,
+        "P7": 22.744299,
+        "P8": 19.7902,
+        "P9": 19.048399,
+        "P10": 16.9976,
+        "P11": 17.4839,
+        "P12": 17.739099
+      }
+    },
+    {
+      "template": "g1",
+      "profile": "large_selective",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 19.102599,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 19.299599,
+          "regret": 1.0103127328380812,
+          "hit": true,
+          "latencyMs": 0.01680000000033033,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 19.837999,
+          "regret": 1.03849737933566,
+          "hit": true,
+          "latencyMs": 0.49430000000029395,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 19.279699,
+          "regret": 1.009270989774742,
+          "hit": true,
+          "latencyMs": 0.27589999999963766,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 74.22216324044653,
+        "P2": 70.13305560315236,
+        "P3": 56.09551999209408,
+        "P4": 53.832211147025674,
+        "P5": 74.94971570594547,
+        "P6": 69.57986169786895,
+        "P7": 30.977379524510212,
+        "P8": 28.29522097381386,
+        "P9": 27.856118281769152,
+        "P10": 27.605572655381057,
+        "P11": 27.918086703209518,
+        "P12": 27.717588234385882
+      },
+      "measuredMs": {
+        "P1": 65.5857,
+        "P2": 59.142899,
+        "P3": 41.752699,
+        "P4": 41.249601,
+        "P5": 64.510701,
+        "P6": 62.0736,
+        "P7": 19.837999,
+        "P8": 19.374301,
+        "P9": 19.299599,
+        "P10": 19.279699,
+        "P11": 19.9483,
+        "P12": 19.102599
+      }
+    },
+    {
+      "template": "g1",
+      "profile": "large_broad",
+      "split": "test",
+      "candidates": 12,
+      "oracleMs": 27.24,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 27.24,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.02580000000034488,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 27.24,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.14069999999992433,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 28.079,
+          "regret": 1.0308002936857563,
+          "hit": true,
+          "latencyMs": 0.23770000000058644,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 73.57113287182788,
+        "P2": 68.40237723593486,
+        "P3": 54.76524887523969,
+        "P4": 52.501284841349715,
+        "P5": 74.1222987750036,
+        "P6": 67.95732227981482,
+        "P7": 34.83177652611417,
+        "P8": 32.66797473597466,
+        "P9": 27.151411932995224,
+        "P10": 26.912192942128364,
+        "P11": 26.97569306016186,
+        "P12": 27.060185208650175
+      },
+      "measuredMs": {
+        "P1": 74.903201,
+        "P2": 68.6788,
+        "P3": 45.3883,
+        "P4": 47.145501,
+        "P5": 74.990099,
+        "P6": 70.911601,
+        "P7": 37.1881,
+        "P8": 35.3206,
+        "P9": 27.24,
+        "P10": 28.079,
+        "P11": 28.300699,
+        "P12": 27.4802
+      }
+    },
+    {
+      "template": "g2",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 9.170001,
+      "oracleId": "P2",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 9.170001,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.011999999999716238,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 9.170001,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1352999999999156,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P3",
+          "ms": 10.002799,
+          "regret": 1.0908176563993832,
+          "hit": false,
+          "latencyMs": 0.05640000000039436,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 10.576258575532973,
+        "P2": 9.796692004441562,
+        "P3": 9.641148347525352
+      },
+      "measuredMs": {
+        "P1": 11.636299,
+        "P2": 9.170001,
+        "P3": 10.002799
+      }
+    },
+    {
+      "template": "g2",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 9.2892,
+      "oracleId": "P3",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 10.076401,
+          "regret": 1.0847436808336564,
+          "hit": false,
+          "latencyMs": 0.004600000000209548,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 10.076401,
+          "regret": 1.0847436808336564,
+          "hit": false,
+          "latencyMs": 0.03510000000005675,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P3",
+          "ms": 9.2892,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.028400000000146974,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 10.576258575532973,
+        "P2": 9.796692004441562,
+        "P3": 9.641148347525352
+      },
+      "measuredMs": {
+        "P1": 9.638101,
+        "P2": 10.076401,
+        "P3": 9.2892
+      }
+    },
+    {
+      "template": "g2",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 23.6062,
+      "oracleId": "P3",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 24.2745,
+          "regret": 1.028310359142937,
+          "hit": true,
+          "latencyMs": 0.004400000000714499,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 24.2745,
+          "regret": 1.028310359142937,
+          "hit": true,
+          "latencyMs": 0.06300000000010186,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P3",
+          "ms": 23.6062,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.03949999999986176,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 33.60714161334935,
+        "P2": 25.499062210167423,
+        "P3": 24.478938579326787
+      },
+      "measuredMs": {
+        "P1": 24.6403,
+        "P2": 24.2745,
+        "P3": 23.6062
+      }
+    },
+    {
+      "template": "g2",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 24.346201,
+      "oracleId": "P3",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 27.9973,
+          "regret": 1.149965861203561,
+          "hit": false,
+          "latencyMs": 0.004300000000512227,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 27.9973,
+          "regret": 1.149965861203561,
+          "hit": false,
+          "latencyMs": 0.05230000000028667,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P3",
+          "ms": 24.346201,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.03430000000025757,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 33.60714161334935,
+        "P2": 25.499062210167423,
+        "P3": 24.478938579326787
+      },
+      "measuredMs": {
+        "P1": 52.2894,
+        "P2": 27.9973,
+        "P3": 24.346201
+      }
+    },
+    {
+      "template": "g2",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 42.1683,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 44.132901,
+          "regret": 1.046589523409765,
+          "hit": true,
+          "latencyMs": 0.004600000000209548,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 44.132901,
+          "regret": 1.046589523409765,
+          "hit": true,
+          "latencyMs": 0.03790000000026339,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 42.1683,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.04250000000047294,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 43.149678027489344,
+        "P2": 44.20029390567073,
+        "P3": 44.533198889518815
+      },
+      "measuredMs": {
+        "P1": 42.1683,
+        "P2": 44.132901,
+        "P3": 44.8516
+      }
+    },
+    {
+      "template": "g2",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 3,
+      "oracleMs": 43.364499,
+      "oracleId": "P1",
+      "picks": {
+        "A": {
+          "id": "P2",
+          "ms": 44.0817,
+          "regret": 1.0165388974054559,
+          "hit": true,
+          "latencyMs": 0.0037000000002080924,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P2",
+          "ms": 44.0817,
+          "regret": 1.0165388974054559,
+          "hit": true,
+          "latencyMs": 0.04629999999997381,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 43.364499,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.033999999999650754,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 43.149678027489344,
+        "P2": 44.20029390567073,
+        "P3": 44.533198889518815
+      },
+      "measuredMs": {
+        "P1": 43.364499,
+        "P2": 44.0817,
+        "P3": 44.755999
+      }
+    },
+    {
+      "template": "g3",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 11.913101,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 13.9326,
+          "regret": 1.1695191705333483,
+          "hit": false,
+          "latencyMs": 0.02849999999943975,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 13.9326,
+          "regret": 1.1695191705333483,
+          "hit": false,
+          "latencyMs": 0.17309999999997672,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 11.913101,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.6311000000005151,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 12.29730238709802,
+        "P2": 12.92984640192625,
+        "P3": 13.010819694489289,
+        "P4": 13.24294182188276,
+        "P5": 12.487432107887798,
+        "P6": 13.176996194302053,
+        "P7": 12.25631521606593,
+        "P8": 12.729481023469779,
+        "P9": 12.994720152010435,
+        "P10": 13.112655049254197,
+        "P11": 12.88996278831312,
+        "P12": 13.106428444835412
+      },
+      "measuredMs": {
+        "P1": 12.3802,
+        "P2": 12.6359,
+        "P3": 13.971601,
+        "P4": 12.501601,
+        "P5": 12.004799,
+        "P6": 13.1976,
+        "P7": 11.913101,
+        "P8": 12.9589,
+        "P9": 13.9326,
+        "P10": 12.901399,
+        "P11": 13.4813,
+        "P12": 12.8843
+      }
+    },
+    {
+      "template": "g3",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 11.6788,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 12.5061,
+          "regret": 1.0708377573038326,
+          "hit": false,
+          "latencyMs": 0.018699999999626016,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 12.5061,
+          "regret": 1.0708377573038326,
+          "hit": false,
+          "latencyMs": 0.15750000000025466,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 11.6788,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.14770000000044092,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 12.29730238709802,
+        "P2": 12.92984640192625,
+        "P3": 13.010819694489289,
+        "P4": 13.24294182188276,
+        "P5": 12.487432107887798,
+        "P6": 13.176996194302053,
+        "P7": 12.25631521606593,
+        "P8": 12.729481023469779,
+        "P9": 12.994720152010435,
+        "P10": 13.112655049254197,
+        "P11": 12.88996278831312,
+        "P12": 13.106428444835412
+      },
+      "measuredMs": {
+        "P1": 11.774899,
+        "P2": 12.826001,
+        "P3": 12.5206,
+        "P4": 14.021799,
+        "P5": 12.0914,
+        "P6": 13.2186,
+        "P7": 11.6788,
+        "P8": 12.0807,
+        "P9": 12.5061,
+        "P10": 13.2709,
+        "P11": 11.6919,
+        "P12": 13.1795
+      }
+    },
+    {
+      "template": "g3",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 24.2726,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 25.523499,
+          "regret": 1.0515354350172623,
+          "hit": false,
+          "latencyMs": 0.014400000000023283,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 25.523499,
+          "regret": 1.0515354350172623,
+          "hit": false,
+          "latencyMs": 0.15090000000054715,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P11",
+          "ms": 25.383199,
+          "regret": 1.0457552548964677,
+          "hit": true,
+          "latencyMs": 0.14769999999953143,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 46.78936011072757,
+        "P2": 55.194003755691774,
+        "P3": 45.486984174219316,
+        "P4": 45.890980215084866,
+        "P5": 47.5342857975306,
+        "P6": 56.911315870763765,
+        "P7": 41.719407358817016,
+        "P8": 44.93096891177377,
+        "P9": 42.25922653370429,
+        "P10": 42.68632520063446,
+        "P11": 41.601540256048466,
+        "P12": 42.04025830423771
+      },
+      "measuredMs": {
+        "P1": 28.893501,
+        "P2": 33.7745,
+        "P3": 27.102799,
+        "P4": 29.652701,
+        "P5": 30.838001,
+        "P6": 35.2175,
+        "P7": 27.4805,
+        "P8": 27.4481,
+        "P9": 25.523499,
+        "P10": 28.0962,
+        "P11": 25.383199,
+        "P12": 24.2726
+      }
+    },
+    {
+      "template": "g3",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 66.0418,
+      "oracleId": "P11",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 72.070299,
+          "regret": 1.091283081321224,
+          "hit": false,
+          "latencyMs": 0.012600000000020373,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 72.070299,
+          "regret": 1.091283081321224,
+          "hit": false,
+          "latencyMs": 0.16649999999935972,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P11",
+          "ms": 66.0418,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.12839999999960128,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 46.78936011072757,
+        "P2": 55.194003755691774,
+        "P3": 45.486984174219316,
+        "P4": 45.890980215084866,
+        "P5": 47.5342857975306,
+        "P6": 56.911315870763765,
+        "P7": 41.719407358817016,
+        "P8": 44.93096891177377,
+        "P9": 42.25922653370429,
+        "P10": 42.68632520063446,
+        "P11": 41.601540256048466,
+        "P12": 42.04025830423771
+      },
+      "measuredMs": {
+        "P1": 77.5135,
+        "P2": 85.967801,
+        "P3": 74.080499,
+        "P4": 81.1612,
+        "P5": 78.202501,
+        "P6": 89.7928,
+        "P7": 67.2046,
+        "P8": 73.6533,
+        "P9": 72.070299,
+        "P10": 72.8278,
+        "P11": 66.0418,
+        "P12": 72.338199
+      }
+    },
+    {
+      "template": "g3",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 43.5417,
+      "oracleId": "P11",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 43.9124,
+          "regret": 1.0085136776928783,
+          "hit": true,
+          "latencyMs": 0.012499999999818101,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 43.9124,
+          "regret": 1.0085136776928783,
+          "hit": true,
+          "latencyMs": 0.14210000000002765,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 43.9124,
+          "regret": 1.0085136776928783,
+          "hit": true,
+          "latencyMs": 0.14879999999993743,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 57.08665747794243,
+        "P2": 73.72870310310094,
+        "P3": 50.70549100916752,
+        "P4": 56.05490915086764,
+        "P5": 58.99606063847416,
+        "P6": 75.67133816501651,
+        "P7": 47.484461522290935,
+        "P8": 56.27826422847217,
+        "P9": 45.32170427171573,
+        "P10": 47.34927145328889,
+        "P11": 45.42683577480218,
+        "P12": 47.00915599095403
+      },
+      "measuredMs": {
+        "P1": 57.912101,
+        "P2": 76.6726,
+        "P3": 50.3112,
+        "P4": 58.187199,
+        "P5": 62.156201,
+        "P6": 76.382499,
+        "P7": 45.502901,
+        "P8": 55.593801,
+        "P9": 43.9124,
+        "P10": 46.501701,
+        "P11": 43.5417,
+        "P12": 46.533599
+      }
+    },
+    {
+      "template": "g3",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 44.673899,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 44.673899,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.013500000000021828,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P9",
+          "ms": 44.673899,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.15430000000014843,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 44.673899,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1573000000007596,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 57.08665747794243,
+        "P2": 73.72870310310094,
+        "P3": 50.70549100916752,
+        "P4": 56.05490915086764,
+        "P5": 58.99606063847416,
+        "P6": 75.67133816501651,
+        "P7": 47.484461522290935,
+        "P8": 56.27826422847217,
+        "P9": 45.32170427171573,
+        "P10": 47.34927145328889,
+        "P11": 45.42683577480218,
+        "P12": 47.00915599095403
+      },
+      "measuredMs": {
+        "P1": 58.592801,
+        "P2": 74.9848,
+        "P3": 51.8926,
+        "P4": 58.424301,
+        "P5": 58.175999,
+        "P6": 77.2238,
+        "P7": 45.935799,
+        "P8": 54.9099,
+        "P9": 44.673899,
+        "P10": 46.6761,
+        "P11": 46.324599,
+        "P12": 47.787301
+      }
+    },
+    {
+      "template": "g4",
+      "profile": "small_selective",
+      "split": "test",
+      "candidates": 24,
+      "oracleMs": 13.4479,
+      "oracleId": "P13",
+      "picks": {
+        "A": {
+          "id": "P17",
+          "ms": 19.823099,
+          "regret": 1.4740665085254945,
+          "hit": false,
+          "latencyMs": 0.03679999999985739,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P13",
+          "ms": 13.4479,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.4918999999999869,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 19.7449,
+          "regret": 1.4682515485689216,
+          "hit": false,
+          "latencyMs": 0.4008000000003449,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 12.287709625884688,
+        "P2": 13.111693901092591,
+        "P3": 12.287709625884688,
+        "P4": 13.111693901092591,
+        "P5": 12.336377590340943,
+        "P6": 13.041555552138757,
+        "P7": 12.336377590340943,
+        "P8": 13.041555552138757,
+        "P9": 12.311597274155117,
+        "P10": 13.176480538126405,
+        "P11": 12.311597274155117,
+        "P12": 13.176480538126405,
+        "P13": 12.904317219596681,
+        "P14": 12.666220382205594,
+        "P15": 12.757105469757743,
+        "P16": 12.626609399419412,
+        "P17": 12.87641723748608,
+        "P18": 12.607536796233,
+        "P19": 12.674677515417589,
+        "P20": 12.574681205647012,
+        "P21": 12.93400213898407,
+        "P22": 12.689556303378973,
+        "P23": 12.77110243684206,
+        "P24": 12.680602435868137
+      },
+      "measuredMs": {
+        "P1": 19.7449,
+        "P2": 22.7114,
+        "P3": 20.483399,
+        "P4": 18.0337,
+        "P5": 17.036,
+        "P6": 16.7512,
+        "P7": 19.958799,
+        "P8": 16.0175,
+        "P9": 20.3447,
+        "P10": 18.445399,
+        "P11": 18.100899,
+        "P12": 16.741301,
+        "P13": 13.4479,
+        "P14": 15.110399,
+        "P15": 14.0857,
+        "P16": 15.3642,
+        "P17": 19.823099,
+        "P18": 16.780801,
+        "P19": 17.031399,
+        "P20": 15.588699,
+        "P21": 18.8759,
+        "P22": 16.28,
+        "P23": 18.2329,
+        "P24": 18.941999
+      }
+    },
+    {
+      "template": "g4",
+      "profile": "small_broad",
+      "split": "test",
+      "candidates": 24,
+      "oracleMs": 13.625899,
+      "oracleId": "P13",
+      "picks": {
+        "A": {
+          "id": "P17",
+          "ms": 15.015401,
+          "regret": 1.1019750696816408,
+          "hit": false,
+          "latencyMs": 0.03590000000076543,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P13",
+          "ms": 13.625899,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.4356999999999971,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P1",
+          "ms": 18.201001,
+          "regret": 1.3357651484133268,
+          "hit": false,
+          "latencyMs": 0.34839999999985594,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 12.287709625884688,
+        "P2": 13.111693901092591,
+        "P3": 12.287709625884688,
+        "P4": 13.111693901092591,
+        "P5": 12.336377590340943,
+        "P6": 13.041555552138757,
+        "P7": 12.336377590340943,
+        "P8": 13.041555552138757,
+        "P9": 12.311597274155117,
+        "P10": 13.176480538126405,
+        "P11": 12.311597274155117,
+        "P12": 13.176480538126405,
+        "P13": 12.904317219596681,
+        "P14": 12.666220382205594,
+        "P15": 12.757105469757743,
+        "P16": 12.626609399419412,
+        "P17": 12.87641723748608,
+        "P18": 12.607536796233,
+        "P19": 12.674677515417589,
+        "P20": 12.574681205647012,
+        "P21": 12.93400213898407,
+        "P22": 12.689556303378973,
+        "P23": 12.77110243684206,
+        "P24": 12.680602435868137
+      },
+      "measuredMs": {
+        "P1": 18.201001,
+        "P2": 17.8338,
+        "P3": 21.3867,
+        "P4": 16.9508,
+        "P5": 15.2653,
+        "P6": 18.271299,
+        "P7": 16.147799,
+        "P8": 15.974599,
+        "P9": 18.083001,
+        "P10": 17.874099,
+        "P11": 17.906099,
+        "P12": 17.1281,
+        "P13": 13.625899,
+        "P14": 13.7639,
+        "P15": 15.344201,
+        "P16": 14.620201,
+        "P17": 15.015401,
+        "P18": 16.198201,
+        "P19": 14.9424,
+        "P20": 15.7915,
+        "P21": 14.1293,
+        "P22": 14.3903,
+        "P23": 15.263799,
+        "P24": 15.067001
+      }
+    },
+    {
+      "template": "g4",
+      "profile": "medium_selective",
+      "split": "test",
+      "candidates": 24,
+      "oracleMs": 19.0784,
+      "oracleId": "P15",
+      "picks": {
+        "A": {
+          "id": "P17",
+          "ms": 19.6756,
+          "regret": 1.0313024152968804,
+          "hit": true,
+          "latencyMs": 0.03319999999985157,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P13",
+          "ms": 19.2527,
+          "regret": 1.0091359862462261,
+          "hit": true,
+          "latencyMs": 1.0413000000007742,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P17",
+          "ms": 19.6756,
+          "regret": 1.0313024152968804,
+          "hit": true,
+          "latencyMs": 0.46080000000074506,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 30.64232671800103,
+        "P2": 44.35271075585123,
+        "P3": 30.443450681696717,
+        "P4": 44.33425212324605,
+        "P5": 27.06347490251846,
+        "P6": 35.24214415543724,
+        "P7": 27.118899847249057,
+        "P8": 35.33962702550981,
+        "P9": 30.77378646809469,
+        "P10": 43.689499673059025,
+        "P11": 30.610711827375486,
+        "P12": 43.67131096852461,
+        "P13": 18.9503328123242,
+        "P14": 25.77618890801397,
+        "P15": 20.22173311777298,
+        "P16": 25.610861838306338,
+        "P17": 18.44262329191626,
+        "P18": 23.349950569860745,
+        "P19": 19.696121590046417,
+        "P20": 23.33160260200537,
+        "P21": 18.499787887696193,
+        "P22": 21.99549322311358,
+        "P23": 19.580541276422366,
+        "P24": 22.280371043786538
+      },
+      "measuredMs": {
+        "P1": 50.939499,
+        "P2": 55.140299,
+        "P3": 54.3075,
+        "P4": 50.145201,
+        "P5": 33.389601,
+        "P6": 36.064,
+        "P7": 35.4018,
+        "P8": 35.596601,
+        "P9": 50.226201,
+        "P10": 52.6191,
+        "P11": 55.697899,
+        "P12": 47.220799,
+        "P13": 19.2527,
+        "P14": 27.095799,
+        "P15": 19.0784,
+        "P16": 23.1532,
+        "P17": 19.6756,
+        "P18": 21.9199,
+        "P19": 22.071601,
+        "P20": 23.022301,
+        "P21": 19.7098,
+        "P22": 22.096399,
+        "P23": 20.141901,
+        "P24": 24.0844
+      }
+    },
+    {
+      "template": "g4",
+      "profile": "medium_broad",
+      "split": "test",
+      "candidates": 24,
+      "oracleMs": 12.676899,
+      "oracleId": "P23",
+      "picks": {
+        "A": {
+          "id": "P17",
+          "ms": 14.4913,
+          "regret": 1.143126564311982,
+          "hit": false,
+          "latencyMs": 0.0397000000002663,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P13",
+          "ms": 15.668,
+          "regret": 1.2359489493447884,
+          "hit": false,
+          "latencyMs": 0.325699999999415,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P17",
+          "ms": 14.4913,
+          "regret": 1.143126564311982,
+          "hit": false,
+          "latencyMs": 0.4260999999996784,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 30.64232671800103,
+        "P2": 44.35271075585123,
+        "P3": 30.443450681696717,
+        "P4": 44.33425212324605,
+        "P5": 27.06347490251846,
+        "P6": 35.24214415543724,
+        "P7": 27.118899847249057,
+        "P8": 35.33962702550981,
+        "P9": 30.77378646809469,
+        "P10": 43.689499673059025,
+        "P11": 30.610711827375486,
+        "P12": 43.67131096852461,
+        "P13": 18.9503328123242,
+        "P14": 25.77618890801397,
+        "P15": 20.22173311777298,
+        "P16": 25.610861838306338,
+        "P17": 18.44262329191626,
+        "P18": 23.349950569860745,
+        "P19": 19.696121590046417,
+        "P20": 23.33160260200537,
+        "P21": 18.499787887696193,
+        "P22": 21.99549322311358,
+        "P23": 19.580541276422366,
+        "P24": 22.280371043786538
+      },
+      "measuredMs": {
+        "P1": 32.5993,
+        "P2": 37.9593,
+        "P3": 39.96,
+        "P4": 33.7436,
+        "P5": 22.7021,
+        "P6": 24.423099,
+        "P7": 24.5781,
+        "P8": 24.3741,
+        "P9": 34.5964,
+        "P10": 39.8104,
+        "P11": 39.8334,
+        "P12": 33.9339,
+        "P13": 15.668,
+        "P14": 18.818101,
+        "P15": 13.9591,
+        "P16": 17.5133,
+        "P17": 14.4913,
+        "P18": 15.724501,
+        "P19": 14.2442,
+        "P20": 14.341499,
+        "P21": 13.2321,
+        "P22": 14.358699,
+        "P23": 12.676899,
+        "P24": 14.2264
+      }
+    },
+    {
+      "template": "g4",
+      "profile": "large_selective",
+      "split": "test",
+      "candidates": 24,
+      "oracleMs": 24.784899,
+      "oracleId": "P23",
+      "picks": {
+        "A": {
+          "id": "P17",
+          "ms": 25.7253,
+          "regret": 1.0379424987771788,
+          "hit": true,
+          "latencyMs": 0.06099999999969441,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P13",
+          "ms": 29.326101,
+          "regret": 1.1832245513689608,
+          "hit": false,
+          "latencyMs": 0.622599999999693,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P21",
+          "ms": 25.211301,
+          "regret": 1.0172041048059142,
+          "hit": true,
+          "latencyMs": 0.9075999999995474,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 71.32229581488225,
+        "P2": 71.32229581488225,
+        "P3": 70.90783891678751,
+        "P4": 71.32229581488225,
+        "P5": 51.38406159313098,
+        "P6": 51.38406159313098,
+        "P7": 51.72948470965518,
+        "P8": 51.38406159313098,
+        "P9": 69.6826819866202,
+        "P10": 69.6826819866202,
+        "P11": 69.16611999636615,
+        "P12": 69.6826819866202,
+        "P13": 29.436674539505248,
+        "P14": 55.36536733929373,
+        "P15": 29.81293622577677,
+        "P16": 56.1494601697251,
+        "P17": 26.275067035815677,
+        "P18": 43.352416079931736,
+        "P19": 27.53477343512679,
+        "P20": 44.67010696710045,
+        "P21": 25.522096648487935,
+        "P22": 40.876725611636225,
+        "P23": 27.32318707438399,
+        "P24": 41.91131349998855
+      },
+      "measuredMs": {
+        "P1": 114.024701,
+        "P2": 131.4843,
+        "P3": 137.2241,
+        "P4": 116.309499,
+        "P5": 61.993999,
+        "P6": 71.264399,
+        "P7": 67.667799,
+        "P8": 69.826501,
+        "P9": 116.7241,
+        "P10": 132.2685,
+        "P11": 137.868101,
+        "P12": 116.6507,
+        "P13": 29.326101,
+        "P14": 44.846801,
+        "P15": 29.873999,
+        "P16": 40.122999,
+        "P17": 25.7253,
+        "P18": 33.317201,
+        "P19": 25.0327,
+        "P20": 32.073899,
+        "P21": 25.211301,
+        "P22": 31.5257,
+        "P23": 24.784899,
+        "P24": 30.939999
+      }
+    },
+    {
+      "template": "g4",
+      "profile": "large_broad",
+      "split": "test",
+      "candidates": 24,
+      "oracleMs": 24.719401,
+      "oracleId": "P21",
+      "picks": {
+        "A": {
+          "id": "P17",
+          "ms": 24.8778,
+          "regret": 1.0064078818091102,
+          "hit": true,
+          "latencyMs": 0.05129999999917345,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P13",
+          "ms": 31.1106,
+          "regret": 1.258549913891522,
+          "hit": false,
+          "latencyMs": 0.5464000000001761,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P21",
+          "ms": 24.719401,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.3246999999992113,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 71.32229581488225,
+        "P2": 71.32229581488225,
+        "P3": 70.90783891678751,
+        "P4": 71.32229581488225,
+        "P5": 51.38406159313098,
+        "P6": 51.38406159313098,
+        "P7": 51.72948470965518,
+        "P8": 51.38406159313098,
+        "P9": 69.6826819866202,
+        "P10": 69.6826819866202,
+        "P11": 69.16611999636615,
+        "P12": 69.6826819866202,
+        "P13": 29.436674539505248,
+        "P14": 55.36536733929373,
+        "P15": 29.81293622577677,
+        "P16": 56.1494601697251,
+        "P17": 26.275067035815677,
+        "P18": 43.352416079931736,
+        "P19": 27.53477343512679,
+        "P20": 44.67010696710045,
+        "P21": 25.522096648487935,
+        "P22": 40.876725611636225,
+        "P23": 27.32318707438399,
+        "P24": 41.91131349998855
+      },
+      "measuredMs": {
+        "P1": 115.379899,
+        "P2": 132.227699,
+        "P3": 136.503799,
+        "P4": 113.8449,
+        "P5": 63.2343,
+        "P6": 71.987099,
+        "P7": 68.1467,
+        "P8": 70.0904,
+        "P9": 113.0834,
+        "P10": 132.9153,
+        "P11": 139.635601,
+        "P12": 116.194501,
+        "P13": 31.1106,
+        "P14": 45.1093,
+        "P15": 30.2156,
+        "P16": 41.8513,
+        "P17": 24.8778,
+        "P18": 32.936,
+        "P19": 25.806499,
+        "P20": 32.678899,
+        "P21": 24.719401,
+        "P22": 33.658801,
+        "P23": 24.728701,
+        "P24": 31.016401
+      }
+    },
+    {
+      "template": "g5",
+      "profile": "small_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 15.074301,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 15.2313,
+          "regret": 1.0104150102880392,
+          "hit": true,
+          "latencyMs": 0.016799999999420834,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 17.3787,
+          "regret": 1.152869376828816,
+          "hit": false,
+          "latencyMs": 0.09069999999974243,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P2",
+          "ms": 15.1112,
+          "regret": 1.002447808359406,
+          "hit": true,
+          "latencyMs": 0.17559999999957654,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 16.609172076032397,
+        "P2": 15.356091739545764,
+        "P3": 15.98244754225134,
+        "P4": 15.381797909980428,
+        "P5": 17.678726262393585,
+        "P6": 16.25984193098951,
+        "P7": 15.709843701424923,
+        "P8": 15.532825446585425,
+        "P9": 15.554204139328014,
+        "P10": 15.683632724049,
+        "P11": 16.61666297279505,
+        "P12": 16.523236065356436
+      },
+      "measuredMs": {
+        "P1": 17.9967,
+        "P2": 15.1112,
+        "P3": 15.2377,
+        "P4": 15.1988,
+        "P5": 24.463,
+        "P6": 18.718301,
+        "P7": 15.344499,
+        "P8": 15.074301,
+        "P9": 15.2313,
+        "P10": 15.755599,
+        "P11": 17.3787,
+        "P12": 17.672899
+      }
+    },
+    {
+      "template": "g5",
+      "profile": "small_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 9.868699,
+      "oracleId": "P7",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 10.722001,
+          "regret": 1.0864655006703519,
+          "hit": false,
+          "latencyMs": 0.014299999999821011,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 9.868699,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.09139999999933934,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 9.868699,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.15819999999985157,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 12.479772375281915,
+        "P2": 12.124049316721297,
+        "P3": 12.630789532605109,
+        "P4": 12.044232025124826,
+        "P5": 12.532163732354574,
+        "P6": 12.320799919508993,
+        "P7": 10.698106943041353,
+        "P8": 11.857083924920751,
+        "P9": 10.968655915384627,
+        "P10": 11.123853273864139,
+        "P11": 11.22117161913402,
+        "P12": 11.405053014364128
+      },
+      "measuredMs": {
+        "P1": 12.248301,
+        "P2": 11.148399,
+        "P3": 13.388301,
+        "P4": 10.9021,
+        "P5": 12.0293,
+        "P6": 12.212701,
+        "P7": 9.868699,
+        "P8": 12.603699,
+        "P9": 10.722001,
+        "P10": 10.714299,
+        "P11": 11.1936,
+        "P12": 11.296799
+      }
+    },
+    {
+      "template": "g5",
+      "profile": "medium_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 18.1687,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 18.443199,
+          "regret": 1.0151083456714018,
+          "hit": true,
+          "latencyMs": 0.014699999999720603,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P12",
+          "ms": 18.1687,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.12629999999990105,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 18.4622,
+          "regret": 1.0161541552229933,
+          "hit": true,
+          "latencyMs": 0.4212999999999738,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 28.765817155406985,
+        "P2": 27.933024446264746,
+        "P3": 25.355467928520863,
+        "P4": 24.175218653570035,
+        "P5": 28.74336981689849,
+        "P6": 28.165251422231087,
+        "P7": 17.296798150268746,
+        "P8": 17.49311681637972,
+        "P9": 18.15570569168519,
+        "P10": 18.83214143283167,
+        "P11": 18.329547309753355,
+        "P12": 18.54738533000912
+      },
+      "measuredMs": {
+        "P1": 32.851099,
+        "P2": 33.554901,
+        "P3": 27.188099,
+        "P4": 26.9608,
+        "P5": 33.39,
+        "P6": 31.7294,
+        "P7": 18.4622,
+        "P8": 18.862101,
+        "P9": 18.443199,
+        "P10": 21.522201,
+        "P11": 18.938801,
+        "P12": 18.1687
+      }
+    },
+    {
+      "template": "g5",
+      "profile": "medium_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 11.816701,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 12.239,
+          "regret": 1.03573747021271,
+          "hit": true,
+          "latencyMs": 0.018000000000029104,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 12.142401,
+          "regret": 1.0275626843735828,
+          "hit": true,
+          "latencyMs": 0.09470000000055734,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 11.816701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.15790000000015425,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 24.432479540694832,
+        "P2": 24.080084372233905,
+        "P3": 20.861365455344732,
+        "P4": 20.466336519407747,
+        "P5": 24.436432786821065,
+        "P6": 24.41379924279575,
+        "P7": 12.263611141626972,
+        "P8": 12.221659023121386,
+        "P9": 12.589300961866805,
+        "P10": 12.579323835996972,
+        "P11": 12.790867437500626,
+        "P12": 12.546913114017608
+      },
+      "measuredMs": {
+        "P1": 22.381899,
+        "P2": 20.889001,
+        "P3": 18.590299,
+        "P4": 18.631601,
+        "P5": 22.243,
+        "P6": 21.849699,
+        "P7": 12.142401,
+        "P8": 11.816701,
+        "P9": 12.239,
+        "P10": 12.442701,
+        "P11": 12.2108,
+        "P12": 12.1179
+      }
+    },
+    {
+      "template": "g5",
+      "profile": "large_selective",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 31.4578,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 33.797601,
+          "regret": 1.0743790411281144,
+          "hit": false,
+          "latencyMs": 0.0136000000002241,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 32.4637,
+          "regret": 1.031976171251645,
+          "hit": true,
+          "latencyMs": 0.09000000000014552,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 33.360701,
+          "regret": 1.0604905937478146,
+          "hit": false,
+          "latencyMs": 0.18060000000059517,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 73.06822932633489,
+        "P2": 69.68574468202084,
+        "P3": 57.24721072872116,
+        "P4": 55.97450079172404,
+        "P5": 75.16563675075776,
+        "P6": 70.73748433122887,
+        "P7": 30.91237363346678,
+        "P8": 32.158294191604256,
+        "P9": 32.02078100151325,
+        "P10": 32.76628702118949,
+        "P11": 31.292202431396262,
+        "P12": 31.73298217619659
+      },
+      "measuredMs": {
+        "P1": 74.862299,
+        "P2": 73.2524,
+        "P3": 59.019499,
+        "P4": 57.5934,
+        "P5": 78.913001,
+        "P6": 70.964801,
+        "P7": 33.360701,
+        "P8": 31.8852,
+        "P9": 33.797601,
+        "P10": 34.204801,
+        "P11": 32.4637,
+        "P12": 31.4578
+      }
+    },
+    {
+      "template": "g5",
+      "profile": "large_broad",
+      "split": "train",
+      "candidates": 12,
+      "oracleMs": 30.312601,
+      "oracleId": "P11",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 32.086699,
+          "regret": 1.0585267493211816,
+          "hit": false,
+          "latencyMs": 0.021899999999732245,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P7",
+          "ms": 31.055199,
+          "regret": 1.0244979967242007,
+          "hit": true,
+          "latencyMs": 0.10779999999977008,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P7",
+          "ms": 31.055199,
+          "regret": 1.0244979967242007,
+          "hit": true,
+          "latencyMs": 0.17579999999998108,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 74.07320309822991,
+        "P2": 70.38686052542286,
+        "P3": 58.563838341202455,
+        "P4": 57.35817044595654,
+        "P5": 75.1341715628819,
+        "P6": 71.2522707680969,
+        "P7": 29.375242878475717,
+        "P8": 30.921163505705902,
+        "P9": 30.77880445819613,
+        "P10": 31.424395018060235,
+        "P11": 29.610582183565434,
+        "P12": 30.683292019642877
+      },
+      "measuredMs": {
+        "P1": 75.3201,
+        "P2": 70.751,
+        "P3": 59.6744,
+        "P4": 59.330699,
+        "P5": 74.476,
+        "P6": 71.3434,
+        "P7": 31.055199,
+        "P8": 31.206601,
+        "P9": 32.086699,
+        "P10": 31.659099,
+        "P11": 30.312601,
+        "P12": 31.769901
+      }
+    },
+    {
+      "template": "g6",
+      "profile": "small_selective",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 12.424201,
+      "oracleId": "P12",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 13.372,
+          "regret": 1.0762865153260157,
+          "hit": false,
+          "latencyMs": 0.026700000000346336,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 12.784,
+          "regret": 1.0289595282626223,
+          "hit": true,
+          "latencyMs": 0.12690000000020518,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 12.912699,
+          "regret": 1.0393182628001592,
+          "hit": true,
+          "latencyMs": 0.1558999999997468,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 13.40245839458624,
+        "P2": 13.265507410059792,
+        "P3": 13.35524911408919,
+        "P4": 13.212609463672635,
+        "P5": 13.508769161608278,
+        "P6": 13.176079158198696,
+        "P7": 13.344254583714054,
+        "P8": 12.759057651615432,
+        "P9": 13.216565449230618,
+        "P10": 12.946734934575339,
+        "P11": 13.235202096172904,
+        "P12": 12.96303113106697
+      },
+      "measuredMs": {
+        "P1": 13.084499,
+        "P2": 14.443799,
+        "P3": 13.422599,
+        "P4": 13.122401,
+        "P5": 14.044599,
+        "P6": 13.917201,
+        "P7": 13.6693,
+        "P8": 12.912699,
+        "P9": 13.372,
+        "P10": 13.215101,
+        "P11": 12.784,
+        "P12": 12.424201
+      }
+    },
+    {
+      "template": "g6",
+      "profile": "small_broad",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 11.255099,
+      "oracleId": "P8",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 12.1705,
+          "regret": 1.081332114448749,
+          "hit": false,
+          "latencyMs": 0.013799999999719148,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 14.043199,
+          "regret": 1.24771883392585,
+          "hit": false,
+          "latencyMs": 0.14469999999982974,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P8",
+          "ms": 11.255099,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.7156000000004497,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 13.40245839458624,
+        "P2": 13.265507410059792,
+        "P3": 13.35524911408919,
+        "P4": 13.212609463672635,
+        "P5": 13.508769161608278,
+        "P6": 13.176079158198696,
+        "P7": 13.344254583714054,
+        "P8": 12.759057651615432,
+        "P9": 13.216565449230618,
+        "P10": 12.946734934575339,
+        "P11": 13.235202096172904,
+        "P12": 12.96303113106697
+      },
+      "measuredMs": {
+        "P1": 13.328701,
+        "P2": 13.508699,
+        "P3": 13.570199,
+        "P4": 13.1269,
+        "P5": 13.9712,
+        "P6": 11.703901,
+        "P7": 13.870699,
+        "P8": 11.255099,
+        "P9": 12.1705,
+        "P10": 12.1287,
+        "P11": 14.043199,
+        "P12": 13.5937
+      }
+    },
+    {
+      "template": "g6",
+      "profile": "medium_selective",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 18.588501,
+      "oracleId": "P10",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 19.890299,
+          "regret": 1.07003243564395,
+          "hit": false,
+          "latencyMs": 0.02459999999973661,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 18.7723,
+          "regret": 1.0098877795471513,
+          "hit": true,
+          "latencyMs": 0.1526000000003478,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 18.588501,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.1867999999994936,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 27.00746013191539,
+        "P2": 26.84803013046865,
+        "P3": 18.91639788074112,
+        "P4": 19.40420045030983,
+        "P5": 28.346410949602518,
+        "P6": 27.31627884501012,
+        "P7": 20.851285955035433,
+        "P8": 20.230964744995262,
+        "P9": 16.659145935599902,
+        "P10": 16.526382476034488,
+        "P11": 16.824519985372497,
+        "P12": 17.40710948899648
+      },
+      "measuredMs": {
+        "P1": 31.572801,
+        "P2": 32.7062,
+        "P3": 22.308401,
+        "P4": 24.035699,
+        "P5": 34.614601,
+        "P6": 34.6914,
+        "P7": 25.855199,
+        "P8": 24.5312,
+        "P9": 19.890299,
+        "P10": 18.588501,
+        "P11": 18.7723,
+        "P12": 20.5626
+      }
+    },
+    {
+      "template": "g6",
+      "profile": "medium_broad",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 13.4396,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 13.4396,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.019099999999525608,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 13.7107,
+          "regret": 1.0201717313015268,
+          "hit": true,
+          "latencyMs": 0.14810000000034051,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P10",
+          "ms": 13.6385,
+          "regret": 1.0147995476055836,
+          "hit": true,
+          "latencyMs": 0.14319999999952415,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 27.00746013191539,
+        "P2": 26.84803013046865,
+        "P3": 18.91639788074112,
+        "P4": 19.40420045030983,
+        "P5": 28.346410949602518,
+        "P6": 27.31627884501012,
+        "P7": 20.851285955035433,
+        "P8": 20.230964744995262,
+        "P9": 16.659145935599902,
+        "P10": 16.526382476034488,
+        "P11": 16.824519985372497,
+        "P12": 17.40710948899648
+      },
+      "measuredMs": {
+        "P1": 23.392699,
+        "P2": 21.556001,
+        "P3": 14.3285,
+        "P4": 15.302999,
+        "P5": 24.840601,
+        "P6": 21.809499,
+        "P7": 18.157,
+        "P8": 17.188901,
+        "P9": 13.4396,
+        "P10": 13.6385,
+        "P11": 13.7107,
+        "P12": 14.901799
+      }
+    },
+    {
+      "template": "g6",
+      "profile": "large_selective",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 31.492701,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 31.492701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.0136000000002241,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 31.75,
+          "regret": 1.0081701153546658,
+          "hit": true,
+          "latencyMs": 0.12269999999989523,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 31.492701,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.14980000000014115,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 73.5356967496644,
+        "P2": 68.1866482535439,
+        "P3": 38.299550944436376,
+        "P4": 39.41555407351206,
+        "P5": 75.60837557729981,
+        "P6": 68.69007425462769,
+        "P7": 49.90314744035631,
+        "P8": 49.38348898160866,
+        "P9": 31.535282140429167,
+        "P10": 32.57608632691154,
+        "P11": 31.995319970221743,
+        "P12": 32.89127885552969
+      },
+      "measuredMs": {
+        "P1": 76.364901,
+        "P2": 68.3909,
+        "P3": 38.2345,
+        "P4": 38.3469,
+        "P5": 77.9338,
+        "P6": 67.8121,
+        "P7": 49.7962,
+        "P8": 49.213299,
+        "P9": 31.492701,
+        "P10": 33.8175,
+        "P11": 31.75,
+        "P12": 32.4828
+      }
+    },
+    {
+      "template": "g6",
+      "profile": "large_broad",
+      "split": "validation",
+      "candidates": 12,
+      "oracleMs": 31.199999,
+      "oracleId": "P9",
+      "picks": {
+        "A": {
+          "id": "P9",
+          "ms": 31.199999,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.014000000000123691,
+          "source": "rules",
+          "failure": false
+        },
+        "B": {
+          "id": "P11",
+          "ms": 31.7167,
+          "regret": 1.0165609300179785,
+          "hit": true,
+          "latencyMs": 0.11869999999998981,
+          "source": "cost-model (LLM not configured)",
+          "failure": false
+        },
+        "C": {
+          "id": "P9",
+          "ms": 31.199999,
+          "regret": 1,
+          "hit": true,
+          "latencyMs": 0.11310000000048603,
+          "source": "predictor aurora-rf-v1",
+          "failure": false
+        }
+      },
+      "predictedMs": {
+        "P1": 73.5356967496644,
+        "P2": 68.1866482535439,
+        "P3": 38.299550944436376,
+        "P4": 39.41555407351206,
+        "P5": 75.60837557729981,
+        "P6": 68.69007425462769,
+        "P7": 49.90314744035631,
+        "P8": 49.38348898160866,
+        "P9": 31.535282140429167,
+        "P10": 32.57608632691154,
+        "P11": 31.995319970221743,
+        "P12": 32.89127885552969
+      },
+      "measuredMs": {
+        "P1": 73.178301,
+        "P2": 68.608499,
+        "P3": 35.994499,
+        "P4": 38.6187,
+        "P5": 75.517099,
+        "P6": 68.784,
+        "P7": 49.9327,
+        "P8": 47.5188,
+        "P9": 31.199999,
+        "P10": 31.4695,
+        "P11": 31.7167,
+        "P12": 33.7879
+      }
+    }
+  ]
+}
