@@ -68,7 +68,7 @@ export const WORKLOADS: Workload[] = [
   },
   {
     id: 'g1', family: 'group-aggregate', split: 'test',
-    description: 'Report Appendix C example',
+    description: 'Join with GROUP BY and ORDER BY (example query)',
     sql: `SELECT c.region, SUM(o.amount) AS total_amount
 FROM customers AS c
 JOIN orders AS o ON c.customer_id = o.customer_id

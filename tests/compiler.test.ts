@@ -61,7 +61,7 @@ describe('lexer (DFA)', () => {
 });
 
 describe('parser', () => {
-  it('parses the report example (Appendix C)', () => {
+  it('parses the example query (template g1)', () => {
     const { ast } = parse(Q_EXAMPLE);
     expect(ast.items).toHaveLength(2);
     expect(ast.from).toMatchObject({ name: 'customers', alias: 'c' });

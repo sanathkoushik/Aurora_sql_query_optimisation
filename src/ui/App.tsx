@@ -184,6 +184,7 @@ export function App() {
             <div className="card-head"><h2>SQL query</h2><span className="spacer" />
               <label className="small muted" htmlFor="ex">Example&nbsp;</label>
               <select id="ex" value={exampleId} onChange={(e) => onExample(e.target.value)}>
+                <option value="">Custom query</option>
                 {WORKLOADS.map((w) => <option key={w.id} value={w.id}>{w.id} – {w.description}</option>)}
               </select>
             </div>
