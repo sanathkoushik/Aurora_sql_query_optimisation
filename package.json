@@ -1,0 +1,33 @@
+{
+  "name": "aurora-sql-query-optimisation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Aurora: an AI-assisted SQL query optimization framework with transparent compilation and interactive visualization (BCSE307P Compiler Design Lab, VIT Vellore).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "validate": "tsx scripts/validate.ts",
+    "benchmark": "tsx scripts/benchmark.ts",
+    "train": "python python/train.py",
+    "evaluate": "tsx scripts/evaluate.ts"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "pyodide": "0.27.8",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  }
+}
