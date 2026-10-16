@@ -68,10 +68,11 @@ textarea.sql { width: 100%; min-height: 210px; resize: vertical; background: var
 textarea.sql:focus-visible, select:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 select, input[type='text'], input[type='password'], input[type='number'] { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px; min-width: 0; }
-.btn { background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 7px 14px; cursor: pointer; font-weight: 600; }
-:root[data-theme='dark'] .btn, :root:not([data-theme='light']) .btn { color: #0b0b0b; }
-.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn { background: #1f5fb0; color: #fff; border: 0; border-radius: 8px; padding: 7px 14px; cursor: pointer; font-weight: 600; }
+.btn:hover:not(:disabled) { background: #184f95; }
+.btn:disabled { background: #5c708a; color: #fff; cursor: not-allowed; }
 .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--border); font-weight: 500; }
+.btn.ghost:disabled { background: transparent; color: var(--ink-3); }
 
 .diag { margin-top: 10px; border: 1px solid var(--bad); border-radius: 8px; padding: 8px 10px; background: color-mix(in srgb, var(--bad) 8%, transparent); }
 .diag b { color: var(--bad); }
