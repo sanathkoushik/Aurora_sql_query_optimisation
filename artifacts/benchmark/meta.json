@@ -19,17 +19,17 @@
     "large_selective",
     "large_broad"
   ],
-  "query_templates": 16,
-  "records": 972,
+  "query_templates": 32,
+  "records": 2052,
   "failed_records": 0,
-  "calibration_wall_clock_seconds": 720.64,
+  "calibration_wall_clock_seconds": 1991.997,
   "per_profile_seconds": {
-    "small_selective": 88.335,
-    "small_broad": 83.344,
-    "medium_selective": 113.136,
-    "medium_broad": 124.357,
-    "large_selective": 150.024,
-    "large_broad": 154.607
+    "small_selective": 125.547,
+    "small_broad": 166.415,
+    "medium_selective": 313.789,
+    "medium_broad": 291.523,
+    "large_selective": 537.061,
+    "large_broad": 551.731
   },
-  "generated_at": "2026-10-15T17:29:49.075Z"
+  "generated_at": "2026-10-29T16:05:56.259Z"
 }

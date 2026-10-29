@@ -119,3 +119,34 @@ export function anthropicClient(opts: { apiKey: string; model: string; fetchImpl
     return block.text as string;
   };
 }
+
+/**
+ * Google Generative Language API client (free tier; works with Gemma and Gemini models). Gemma
+ * models reject a separate system instruction, so the system text is prepended to the user turn.
+ * Temperature 0 keeps the answer as repeatable as the API allows. The key is held in memory only.
+ */
+export function geminiClient(opts: { apiKey: string; model: string; fetchImpl?: typeof fetch }): LlmClient {
+  const f = opts.fetchImpl ?? fetch;
+  return async ({ system, user }, signal) => {
+    const res = await f(`https://generativelanguage.googleapis.com/v1beta/models/${opts.model}:generateContent`, {
+      method: 'POST',
+      signal,
+      headers: { 'content-type': 'application/json', 'x-goog-api-key': opts.apiKey },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: `${system}
+
+${user}` }] }],
+        generationConfig: { temperature: 0, maxOutputTokens: 1024 },
+      }),
+    });
+    if (!res.ok) {
+      const detail = (await res.text().catch(() => '')).replace(/\s+/g, ' ').slice(0, 160);
+      throw new Error(`HTTP ${res.status} ${detail}`);
+    }
+    const data = await res.json();
+    const parts = (data.candidates?.[0]?.content?.parts ?? []) as { text?: string; thought?: boolean }[];
+    const text = parts.filter((p) => !p.thought && typeof p.text === 'string').map((p) => p.text).join('');
+    if (!text) throw new Error('no text in response');
+    return text;
+  };
+}

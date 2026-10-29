@@ -7,7 +7,8 @@ import { estimateRows, makeStatsContext, selectivity, whereSelectivity } from '.
 import { FEATURE_NAMES, FEATURE_SCHEMA_VERSION, extractFeatures, featureArray } from '../src/predictor/features';
 import { ForestModel, ModelCompatibilityError, assertCompatible, predictMs } from '../src/predictor/forest';
 import { DataProfile } from '../src/runtime/runtime';
-import { anthropicClient, parseLlmChoice, selectAIAssisted } from '../src/selectors/aiAssisted';
+import { anthropicClient, geminiClient, parseLlmChoice, selectAIAssisted } from '../src/selectors/aiAssisted';
+import { selectCombined } from '../src/selectors/combined';
 import { selectPredictorGuided } from '../src/selectors/predictorGuided';
 import { selectRuleBased } from '../src/selectors/ruleBased';
 
@@ -243,5 +244,68 @@ describe('exported scikit-learn forest parity', () => {
       const got = predictMs(model, x);
       expect(Math.abs(got - parity.expected_ms[i])).toBeLessThan(1e-6 * Math.max(1, parity.expected_ms[i]));
     });
+  });
+});
+
+describe('Gemini/Gemma client', () => {
+  it('sends the documented request, merges system into the user turn and skips thought parts', async () => {
+    let seen: any;
+    const fetchImpl = (async (url: string, init: any) => {
+      seen = { url, init };
+      return { ok: true, json: async () => ({ candidates: [{ content: { parts: [{ text: 'thinking', thought: true }, { text: '{"choice":"P1"}' }] } }] }) };
+    }) as unknown as typeof fetch;
+    const text = await geminiClient({ apiKey: 'k', model: 'gemma-x', fetchImpl })({ system: 'sys', user: 'usr' });
+    expect(text).toBe('{"choice":"P1"}');
+    expect(seen.url).toBe('https://generativelanguage.googleapis.com/v1beta/models/gemma-x:generateContent');
+    expect(seen.init.headers['x-goog-api-key']).toBe('k');
+    expect(JSON.parse(seen.init.body).contents[0].parts[0].text).toBe('sys' + String.fromCharCode(10, 10) + 'usr');
+  });
+  it('reports HTTP errors and empty answers', async () => {
+    const bad = (async () => ({ ok: false, status: 500, text: async () => 'oops' })) as unknown as typeof fetch;
+    await expect(geminiClient({ apiKey: 'k', model: 'm', fetchImpl: bad })({ system: '', user: '' })).rejects.toThrow('HTTP 500');
+    const empty = (async () => ({ ok: true, json: async () => ({ candidates: [] }) })) as unknown as typeof fetch;
+    await expect(geminiClient({ apiKey: 'k', model: 'm', fetchImpl: empty })({ system: '', user: '' })).rejects.toThrow('no text');
+  });
+});
+
+describe('Mode D - combined predictor + LLM', () => {
+  const q = compile(G1);
+  const idx = FEATURE_NAMES.indexOf('columns_into_joins');
+  const tiny: ForestModel = {
+    model_type: 'random_forest_regressor', model_version: 'test-v0', schema_version: FEATURE_SCHEMA_VERSION,
+    feature_names: [...FEATURE_NAMES], target_transform: 'log1p', trained_at: 'now', n_estimators: 1,
+    trees: [{ feature: [idx, -2, -2], threshold: [20, 0, 0], left: [1, -1, -1], right: [2, -1, -1], value: [0, Math.log1p(10), Math.log1p(100)] }],
+  };
+  const base = selectPredictorGuided(q, profile, tiny);
+  const shortlist = base.ranking.slice(0, 3).map((r) => r.id);
+  const outsider = base.ranking[base.ranking.length - 1].id;
+  it('equals Mode C when no LLM is configured', async () => {
+    const r = await selectCombined(q, profile, tiny);
+    expect(r.mode).toBe('D');
+    expect(r.selectedId).toBe(base.selectedId);
+    expect(r.source).toContain('LLM not configured');
+  });
+  it('accepts an LLM choice from the shortlist', async () => {
+    const pick = shortlist[1];
+    const r = await selectCombined(q, profile, tiny, { modelName: 'mock', client: async () => JSON.stringify({ choice: pick, rationale: 'r' }) });
+    expect(r.selectedId).toBe(pick);
+    expect(r.source).toBe('predictor + llm (mock)');
+    expect(r.ranking[0].id).toBe(pick);
+    expect(r.ranking).toHaveLength(base.ranking.length);
+  });
+  it('rejects a candidate outside the shortlist and keeps the predictor choice', async () => {
+    const r = await selectCombined(q, profile, tiny, { modelName: 'mock', client: async () => JSON.stringify({ choice: outsider }) });
+    expect(r.selectedId).toBe(base.selectedId);
+    expect(r.source).toContain('fallback');
+    expect(r.warnings.length).toBeGreaterThan(0);
+  });
+  it('keeps the predictor choice when the LLM throws', async () => {
+    const r = await selectCombined(q, profile, tiny, { modelName: 'mock', client: async () => { throw new Error('boom'); } });
+    expect(r.selectedId).toBe(base.selectedId);
+    expect(r.source).toContain('LLM unavailable');
+  });
+  it('falls back to the rule-based baseline when the model is missing', async () => {
+    const r = await selectCombined(q, profile, null, { modelName: 'mock', client: async () => '{"choice":"P1"}' });
+    expect(r.source).toBe('fallback:rule-based');
   });
 });

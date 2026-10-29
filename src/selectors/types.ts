@@ -1,9 +1,10 @@
-export type SelectorMode = 'A' | 'B' | 'C';
+export type SelectorMode = 'A' | 'B' | 'C' | 'D';
 
 export const MODE_NAMES: Record<SelectorMode, string> = {
   A: 'Rule-based',
   B: 'AI-assisted (hybrid cost + LLM)',
   C: 'Predictor-guided',
+  D: 'Combined (predictor shortlist + LLM)',
 };
 
 export interface RankedCandidate { id: string; score: number; note?: string }

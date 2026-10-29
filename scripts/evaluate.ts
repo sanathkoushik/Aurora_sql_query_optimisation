@@ -8,18 +8,25 @@
  *
  *   npm run evaluate          (needs artifacts/benchmark/* and artifacts/model/*)
  *
- * If ANTHROPIC_API_KEY is set, Mode B also consults the LLM; otherwise Mode B is the analytical
- * cost model alone and the output says so.
+ * LLM modes: if GEMINI_API_KEY is set (free tier; default model gemini-3.5-flash-lite) or ANTHROPIC_API_KEY
+ * is set, Mode B (LLM over all candidates) and Mode D (LLM over the predictor's top 3) consult the
+ * model on the held-out TEST cases. Every answer is cached in artifacts/results/llm_cache.json, so a
+ * rerun reproduces the same decisions without calling the API. 'B0' is always the cost model alone.
  */
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { compile } from '../src/compiler';
 import { WORKLOADS } from '../src/data/workloads';
 import { ForestModel } from '../src/predictor/forest';
-import { LlmConfig, anthropicClient, selectAIAssisted } from '../src/selectors/aiAssisted';
+import { LlmClient, LlmConfig, anthropicClient, geminiClient, selectAIAssisted } from '../src/selectors/aiAssisted';
+import { selectCombined } from '../src/selectors/combined';
 import { selectPredictorGuided } from '../src/selectors/predictorGuided';
 import { selectRuleBased } from '../src/selectors/ruleBased';
 import { SelectionResult, SelectorMode } from '../src/selectors/types';
+
+type EvalMode = SelectorMode | 'B0';
+const MODES: EvalMode[] = ['A', 'B0', 'B', 'C', 'D'];
 import { DataProfile } from '../src/runtime/runtime';
 import { ROOT, createNodeRuntime } from './lib/nodeRuntime';
 
@@ -51,16 +58,54 @@ function bootstrapCI(values: number[], stat: (xs: number[]) => number, iters = 4
 }
 
 // ---- LLM (optional) ------------------------------------------------------------------------
+const CACHE_PATH = join(ROOT, 'artifacts/results/llm_cache.json');
+const llmCache: Record<string, string> = existsSync(CACHE_PATH) ? JSON.parse(readFileSync(CACHE_PATH, 'utf8')) : {};
+const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const llmStats = { live_calls: 0, cache_hits: 0, retries: 0 };
+
+/** Cache + throttle + retry wrapper: free tiers rate-limit, and caching makes reruns reproducible. */
+function cachedClient(inner: LlmClient, modelName: string): LlmClient {
+  return async (prompt, signal) => {
+    const key = createHash('sha256').update(`${modelName}\n${prompt.system}\n${prompt.user}`).digest('hex');
+    if (key in llmCache) { llmStats.cache_hits++; return llmCache[key]; }
+    for (let attempt = 0; ; attempt++) {
+      try {
+        await sleep(Number(process.env.AURORA_LLM_DELAY_MS ?? 2500));
+        llmStats.live_calls++;
+        const t0 = Date.now();
+        const text = await inner(prompt, signal);
+        console.log(`  llm call ok in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+        llmCache[key] = text;
+        mkdirSync(join(ROOT, 'artifacts/results'), { recursive: true });
+        writeFileSync(CACHE_PATH, JSON.stringify(llmCache, null, 1));
+        return text;
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        if (attempt >= 8 || !/HTTP (429|5\d\d)|fetch failed|no text/.test(msg)) throw e;
+        llmStats.retries++;
+        console.log(`  llm retry ${attempt + 1}: ${msg.slice(0, 80)}`);
+        await sleep(Math.min(60_000, 8_000 * (attempt + 1)));
+      }
+    }
+  };
+}
+
 let llm: LlmConfig | undefined;
-if (process.env.ANTHROPIC_API_KEY) {
+let llmProvider = 'none';
+if (process.env.GEMINI_API_KEY) {
+  const modelName = process.env.AURORA_LLM_MODEL ?? 'gemini-3.5-flash-lite';
+  llm = { client: cachedClient(geminiClient({ apiKey: process.env.GEMINI_API_KEY, model: modelName }), modelName), modelName, timeoutMs: 900_000 };
+  llmProvider = 'Google Generative Language API (free tier)';
+} else if (process.env.ANTHROPIC_API_KEY) {
   const modelName = process.env.AURORA_LLM_MODEL ?? 'claude-sonnet-5-5';
-  llm = { client: anthropicClient({ apiKey: process.env.ANTHROPIC_API_KEY, model: modelName }), modelName, timeoutMs: 30_000 };
+  llm = { client: cachedClient(anthropicClient({ apiKey: process.env.ANTHROPIC_API_KEY, model: modelName }), modelName), modelName, timeoutMs: 900_000 };
+  llmProvider = 'Anthropic Messages API';
 }
 
 // ---- cases -----------------------------------------------------------------------------------
 interface CaseResult {
   template: string; profile: string; split: string; candidates: number; oracleMs: number; oracleId: string;
-  picks: Record<SelectorMode, { id: string; ms: number | null; regret: number | null; hit: boolean; latencyMs: number; source: string; failure: boolean }>;
+  picks: Record<EvalMode, { id: string; ms: number | null; regret: number | null; hit: boolean; latencyMs: number; source: string; failure: boolean; rationale: string }>;
   predictedMs: Record<string, number>; measuredMs: Record<string, number>;
 }
 
@@ -83,18 +128,24 @@ for (const w of WORKLOADS) {
     const oracleMs = Math.min(...pool.map((c) => measured[c.id]));
     const oracleId = pool.find((c) => measured[c.id] === oracleMs)!.id;
 
-    const results: Record<SelectorMode, SelectionResult> = {
+    const useLlm = w.split === 'test' ? llm : undefined; // LLM calls are spent on the held-out cases only
+    const B0 = await selectAIAssisted(q, profile, undefined, pool);
+    const results: Record<EvalMode, SelectionResult> = {
       A: selectRuleBased(q, pool),
-      B: await selectAIAssisted(q, profile, llm, pool),
+      B0,
+      B: useLlm ? await selectAIAssisted(q, profile, useLlm, pool) : B0,
       C: selectPredictorGuided(q, profile, model, pool),
+      D: await selectCombined(q, profile, model, useLlm, pool),
     };
+    if (useLlm) process.stdout.write(`llm ${w.id}/${pid}: B=${results.B.source} D=${results.D.source}
+`);
     const picks = {} as CaseResult['picks'];
-    for (const m of ['A', 'B', 'C'] as SelectorMode[]) {
+    for (const m of MODES) {
       const r = results[m];
       const ms = measured[r.selectedId] ?? null;
       picks[m] = {
         id: r.selectedId, ms, regret: ms === null ? null : ms / oracleMs,
-        hit: ms !== null && ms <= oracleMs * HIT_TOLERANCE, latencyMs: r.latencyMs, source: r.source, failure: ms === null,
+        hit: ms !== null && ms <= oracleMs * HIT_TOLERANCE, latencyMs: r.latencyMs, source: r.source, failure: ms === null, rationale: r.rationale,
       };
     }
     cases.push({
@@ -105,7 +156,7 @@ for (const w of WORKLOADS) {
 }
 
 // ---- aggregation -----------------------------------------------------------------------------
-function summarize(cs: CaseResult[], mode: SelectorMode) {
+function summarize(cs: CaseResult[], mode: EvalMode) {
   const regrets = cs.map((c) => c.picks[mode].regret).filter((x): x is number => x !== null);
   const runtimes = cs.map((c) => c.picks[mode].ms).filter((x): x is number => x !== null);
   return {
@@ -118,11 +169,14 @@ function summarize(cs: CaseResult[], mode: SelectorMode) {
     median_decision_latency_ms: median(cs.map((c) => c.picks[mode].latencyMs)),
     result_failures: cs.filter((c) => c.picks[mode].failure).length,
     sources: [...new Set(cs.map((c) => c.picks[mode].source))],
+    llm_answered: cs.filter((c) => /llm \(/.test(c.picks[mode].source)).length,
+    llm_fallbacks: cs.filter((c) => /fallback/.test(c.picks[mode].source)).length,
+    chose_different_from_baseline: mode === 'B' ? cs.filter((c) => c.picks.B.id !== c.picks.B0.id).length : mode === 'D' ? cs.filter((c) => c.picks.D.id !== c.picks.C.id).length : 0,
   };
 }
 
 /** Paired comparison of mean regret: positive diff means `a` is worse (higher regret) than `b`. */
-function paired(cs: CaseResult[], a: SelectorMode, b: SelectorMode) {
+function paired(cs: CaseResult[], a: EvalMode, b: EvalMode) {
   const diffs = cs.map((c) => (c.picks[a].regret ?? NaN) - (c.picks[b].regret ?? NaN)).filter((x) => !Number.isNaN(x));
   const mean = (xs: number[]) => xs.reduce((s, x) => s + x, 0) / xs.length;
   const [lo, hi] = bootstrapCI(diffs, mean);
@@ -142,8 +196,13 @@ const evaluation = {
   environment_id: meta.environment_id,
   hit_tolerance: HIT_TOLERANCE,
   llm_used: !!llm,
-  test: { A: summarize(testCases, 'A'), B: summarize(testCases, 'B'), C: summarize(testCases, 'C'), paired: [paired(testCases, 'A', 'C'), paired(testCases, 'B', 'C'), paired(testCases, 'A', 'B')] },
-  all_cases_A_vs_B: { A: summarize(cases, 'A'), B: summarize(cases, 'B'), paired: paired(cases, 'A', 'B') },
+  llm: llm ? { provider: llmProvider, model: llm.modelName, ...llmStats, cache_entries: Object.keys(llmCache).length } : null,
+  suite: { templates: WORKLOADS.length, test_templates: [...new Set(testCases.map((c) => c.template))].length, cases: cases.length },
+  test: {
+    A: summarize(testCases, 'A'), B0: summarize(testCases, 'B0'), B: summarize(testCases, 'B'), C: summarize(testCases, 'C'), D: summarize(testCases, 'D'),
+    paired: [paired(testCases, 'A', 'C'), paired(testCases, 'B0', 'C'), paired(testCases, 'A', 'B0'), paired(testCases, 'B', 'B0'), paired(testCases, 'B', 'C'), paired(testCases, 'D', 'C'), paired(testCases, 'D', 'B'), paired(testCases, 'D', 'A')],
+  },
+  all_cases_A_vs_B: { A: summarize(cases, 'A'), B: summarize(cases, 'B0'), paired: paired(cases, 'A', 'B0') },
   noise,
   cases,
 };
@@ -159,10 +218,19 @@ const ts = train.test_scores, vs = train.validation_scores;
 const md: string[] = [];
 md.push('# Aurora evaluation results', '');
 md.push(`Generated ${evaluation.generated_at} from \`artifacts/benchmark\` (${meta.records} candidate records, ${meta.failed_records} failed/inequivalent, ${meta.warmup_runs} warm-up + ${meta.timed_repetitions} timed runs each) in \`${meta.environment_id}\`.`);
-md.push('', 'Mode B ' + (evaluation.llm_used ? 'consulted the LLM.' : '**used the analytical cost model only (no LLM key configured for this run)**.'), '');
+md.push('', evaluation.llm
+  ? `LLM: **${evaluation.llm.model}** via ${evaluation.llm.provider}, consulted by Modes B and D on the held-out test cases only (${evaluation.llm.live_calls} live calls, ${evaluation.llm.cache_hits} cache hits, ${evaluation.llm.retries} retries). Mode B0 is the cost model alone.`
+  : '**No LLM key was configured for this run: Mode B equals B0 (cost model only) and Mode D equals Mode C.**', '');
 md.push(`## Table 4.3 – Selector comparison on held-out test templates (${testCases.length} cases: ${[...new Set(testCases.map((c) => c.template))].join(', ')} × ${[...new Set(testCases.map((c) => c.profile))].length} data profiles)`, '');
 md.push('| Strategy | Median selected runtime (ms) | Median regret (95% bootstrap CI) | Oracle-hit rate (%, ≤5% of fastest) | Median decision latency (ms) | Result failures |', '|---|---|---|---|---|---|');
-md.push(row('A. Rule-based', T.A), row('B. Existing AI-assisted' + (evaluation.llm_used ? '' : ' (cost model only)'), T.B), row('C. Predictor-guided', T.C), '');
+md.push(row('A. Rule-based', T.A), row('B0. Cost model only', T.B0));
+if (evaluation.llm_used) md.push(row(`B. AI-assisted (${evaluation.llm!.model})`, T.B));
+md.push(row('C. Predictor-guided', T.C));
+if (evaluation.llm_used) md.push(row(`D. Combined predictor + LLM (${evaluation.llm!.model})`, T.D));
+md.push('');
+if (evaluation.llm_used) {
+  md.push(`LLM behaviour on the ${testCases.length} test cases: Mode B answered validly ${T.B.llm_answered} times (${T.B.llm_fallbacks} fallbacks) and chose a plan different from the cost model in ${T.B.chose_different_from_baseline}; Mode D answered validly ${T.D.llm_answered} times (${T.D.llm_fallbacks} fallbacks) and overrode the predictor in ${T.D.chose_different_from_baseline}.`, '');
+}
 md.push('Paired mean-regret differences (bootstrap 95% CI):', '');
 for (const p of T.paired) md.push(`- ${p.a} − ${p.b}: ${f(p.mean_regret_diff, 4)} [${f(p.ci95[0], 4)}, ${f(p.ci95[1], 4)}] → **${p.verdict}**`);
 md.push('', `Run-to-run variation of a single timed run: median relative spread (max−min)/median = ${f(noise.median_relative_spread * 100, 1)}%, p90 = ${f(noise.p90_relative_spread * 100, 1)}%. Differences smaller than this are not distinguishable from noise.`, '');
@@ -184,7 +252,7 @@ for (const r of train.leave_one_template_out.per_template) {
 const A_all = evaluation.all_cases_A_vs_B;
 md.push('', `## Supplementary – A vs B on all ${cases.length} cases (no learning involved)`, '', '| Strategy | Median selected runtime (ms) | Median regret | Oracle-hit rate (%) |', '|---|---|---|---|');
 md.push(`| A. Rule-based | ${f(A_all.A.median_selected_runtime_ms)} | ${f(A_all.A.median_regret)} | ${f(A_all.A.oracle_hit_rate_pct, 1)} |`);
-md.push(`| B. ${evaluation.llm_used ? 'AI-assisted' : 'Cost model only'} | ${f(A_all.B.median_selected_runtime_ms)} | ${f(A_all.B.median_regret)} | ${f(A_all.B.oracle_hit_rate_pct, 1)} |`);
+md.push(`| B0. Cost model only | ${f(A_all.B.median_selected_runtime_ms)} | ${f(A_all.B.median_regret)} | ${f(A_all.B.oracle_hit_rate_pct, 1)} |`);
 md.push('', `Paired A − B mean regret: ${f(A_all.paired.mean_regret_diff, 4)} [${f(A_all.paired.ci95[0], 4)}, ${f(A_all.paired.ci95[1], 4)}] → **${A_all.paired.verdict}**`, '');
 md.push('## Scope and limits', '', '- Measurements are from the pandas/Pyodide runtime on Node and apply only to the candidate space Aurora generates; they do not generalise to production DBMS engines.', '- The test set is small (few templates × 6 profiles); confidence intervals are wide and "inconclusive" is a legitimate outcome.', '- The oracle (fastest measured plan) is used only for scoring.', '');
 writeFileSync(join(ROOT, 'artifacts/results/RESULTS.md'), md.join('\n'));

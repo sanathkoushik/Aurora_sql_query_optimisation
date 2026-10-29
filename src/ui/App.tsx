@@ -6,7 +6,8 @@ import { FEATURE_NAMES, extractFeatures, featureArray } from '../predictor/featu
 import { generatePandas } from '../runtime/codegen';
 import { candidateCodes, orderPositions } from '../runtime/plan';
 import { AuroraRuntime, DataProfile, DisplayResult, EnvironmentInfo } from '../runtime/runtime';
-import { LlmConfig, anthropicClient, selectAIAssisted } from '../selectors/aiAssisted';
+import { LlmConfig, anthropicClient, geminiClient, selectAIAssisted } from '../selectors/aiAssisted';
+import { selectCombined } from '../selectors/combined';
 import { selectPredictorGuided } from '../selectors/predictorGuided';
 import { selectRuleBased } from '../selectors/ruleBased';
 import { MODE_NAMES, SelectionResult, SelectorMode } from '../selectors/types';
@@ -22,8 +23,13 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'comparison', label: 'Comparison' },
   { id: 'evaluation', label: 'Held-out evaluation' },
 ];
-const MODE_COLOR: Record<SelectorMode, string> = { A: 'var(--mode-a)', B: 'var(--mode-b)', C: 'var(--mode-c)' };
-const MODES: SelectorMode[] = ['A', 'B', 'C'];
+const MODE_COLOR: Record<SelectorMode, string> = { A: 'var(--mode-a)', B: 'var(--mode-b)', C: 'var(--mode-c)', D: 'var(--mode-d)' };
+const MODES: SelectorMode[] = ['A', 'B', 'C', 'D'];
+const PROVIDERS = {
+  gemini: { label: 'Google Gemini (free tier; Gemma also works)', model: 'gemini-3.5-flash-lite', host: 'generativelanguage.googleapis.com' },
+  anthropic: { label: 'Anthropic Claude', model: 'claude-sonnet-5-5', host: 'api.anthropic.com' },
+} as const;
+type Provider = keyof typeof PROVIDERS;
 
 interface BenchRow { id: string; times: number[]; median: number; equivalent: boolean; reason: string; error: string | null }
 interface BenchState { key: string; rows: Record<string, BenchRow>; oracleId: string | null; oracleMs: number; seconds: number }
@@ -81,11 +87,15 @@ export function App() {
 
   // ---- selectors ----
   const [apiKey, setApiKey] = useState('');
-  const [llmModel, setLlmModel] = useState('claude-sonnet-5-5');
-  const llm: LlmConfig | undefined = useMemo(
-    () => (apiKey.trim() ? { client: anthropicClient({ apiKey: apiKey.trim(), model: llmModel }), modelName: llmModel, timeoutMs: 30_000 } : undefined),
-    [apiKey, llmModel],
-  );
+  const [provider, setProviderState] = useState<Provider>('gemini');
+  const [llmModel, setLlmModel] = useState<string>(PROVIDERS.gemini.model);
+  const setProvider = (p: Provider) => { setProviderState(p); setLlmModel(PROVIDERS[p].model); };
+  const llm: LlmConfig | undefined = useMemo(() => {
+    const key = apiKey.trim();
+    if (!key) return undefined;
+    const client = provider === 'gemini' ? geminiClient({ apiKey: key, model: llmModel }) : anthropicClient({ apiKey: key, model: llmModel });
+    return { client, modelName: llmModel, timeoutMs: 30_000 };
+  }, [apiKey, llmModel, provider]);
   const selA = useMemo(() => (compiled ? selectRuleBased(compiled, validCandidates) : null), [compiled, validCandidates]);
   const selC = useMemo(
     () => (compiled && profile ? selectPredictorGuided(compiled, profile, model, validCandidates) : null),
@@ -103,7 +113,19 @@ export function App() {
       .finally(() => alive && setSelBBusy(false));
     return () => { alive = false; };
   }, [compiled, profile, llm, validCandidates]);
-  const selections: Partial<Record<SelectorMode, SelectionResult>> = { A: selA ?? undefined, B: selB ?? undefined, C: selC ?? undefined };
+  const [selD, setSelD] = useState<SelectionResult | null>(null);
+  const [selDBusy, setSelDBusy] = useState(false);
+  useEffect(() => {
+    setSelD(null);
+    if (!compiled || !profile) return;
+    let alive = true;
+    setSelDBusy(true);
+    selectCombined(compiled, profile, model, llm, validCandidates)
+      .then((r) => alive && setSelD(r))
+      .finally(() => alive && setSelDBusy(false));
+    return () => { alive = false; };
+  }, [compiled, profile, model, llm, validCandidates]);
+  const selections: Partial<Record<SelectorMode, SelectionResult>> = { A: selA ?? undefined, B: selB ?? undefined, C: selC ?? undefined, D: selD ?? undefined };
 
   // ---- benchmark ----
   const [warmup, setWarmup] = useState(2);
@@ -247,7 +269,7 @@ export function App() {
 
           {compiled && tab === 'selectors' && (
             <SelectorsPanel
-              q={compiled} selections={selections} model={model} profile={profile} selBBusy={selBBusy}
+              q={compiled} selections={selections} model={model} profile={profile} selBBusy={selBBusy} selDBusy={selDBusy} provider={provider} setProvider={setProvider}
               apiKey={apiKey} setApiKey={setApiKey} llmModel={llmModel} setLlmModel={setLlmModel}
               onRun={(m) => { const s = selections[m]; const c = validCandidates.find((x) => x.id === s?.selectedId); if (c) runPlan(`Mode ${m}`, c); }}
               display={display} runError={runError}
@@ -354,7 +376,7 @@ function CandidatesPanel({ q, activeId, onPick, bench }: { q: CompiledQuery; act
 }
 
 function SelectorsPanel(props: {
-  q: CompiledQuery; selections: Partial<Record<SelectorMode, SelectionResult>>; model: ForestModel | null; profile: DataProfile | null; selBBusy: boolean;
+  q: CompiledQuery; selections: Partial<Record<SelectorMode, SelectionResult>>; model: ForestModel | null; profile: DataProfile | null; selBBusy: boolean; selDBusy: boolean; provider: Provider; setProvider: (p: Provider) => void;
   apiKey: string; setApiKey: (s: string) => void; llmModel: string; setLlmModel: (s: string) => void;
   onRun: (m: SelectorMode) => void; display: { mode: string; id: string; result: DisplayResult } | null; runError: string | null;
 }) {
@@ -366,14 +388,14 @@ function SelectorsPanel(props: {
   }, [q, profile, showFeatures]);
   return (
     <div>
-      <p className="muted small">All three strategies rank the same valid candidate set (Figure 3.2). The measured oracle is never an input.</p>
-      <div className="grid3">
+      <p className="muted small">All four strategies rank the same valid candidate set (Figure 3.2). The measured oracle is never an input.</p>
+      <div className="grid3 grid4">
         {MODES.map((m) => {
           const s = props.selections[m];
           return (
             <div key={m} className="mode-card" style={{ ['--c' as string]: MODE_COLOR[m] }}>
-              <h3><span className={`badge ${m.toLowerCase()}`}>Mode {m}</span>{m === 'B' && s && !s.source.startsWith('llm') ? 'AI-assisted (cost model only)' : MODE_NAMES[m]}</h3>
-              {!s ? <p className="muted small">{m === 'B' && props.selBBusy ? 'Deciding…' : 'Waiting for the data profile…'}</p> : (
+              <h3><span className={`badge ${m.toLowerCase()}`}>Mode {m}</span>{m === 'B' && s && !s.source.startsWith('llm') ? 'AI-assisted (cost model only)' : m === 'D' && s && !s.source.includes('llm') ? 'Combined (predictor only: no LLM)' : MODE_NAMES[m]}</h3>
+              {!s ? <p className="muted small">{(m === 'B' && props.selBBusy) || (m === 'D' && props.selDBusy) ? 'Deciding…' : 'Waiting for the data profile…'}</p> : (
                 <>
                   <div className="big">{s.selectedId}</div>
                   <div className="small muted">{q.candidates.find((c) => c.id === s.selectedId)?.transformations.join(' · ')}</div>
@@ -411,10 +433,13 @@ function SelectorsPanel(props: {
         </div>
       )}
 
-      <Section title="Mode B – AI assistance (optional)">
-        <p className="muted small">Mode B always computes the analytical cost model. If you enter an Anthropic API key it also asks the LLM to choose among the candidates; the answer is accepted only if it names a listed candidate, otherwise Aurora falls back to the cost model and says so. The key stays in this tab’s memory and is sent only to api.anthropic.com.</p>
+      <Section title="Modes B and D – AI assistance (optional)">
+        <p className="muted small">Mode B always computes the analytical cost model; Mode D always computes the Random-Forest ranking. If you enter an API key, Mode B asks the LLM to choose among all candidates and Mode D asks it to choose among the predictor’s top three. An answer is accepted only if it names a listed candidate, otherwise Aurora falls back to the cost model (B) or the predictor (D) and says so. Free option: a Google AI Studio key with a Gemini or Gemma model. The key stays in this tab’s memory and is sent only to {PROVIDERS[props.provider].host}.</p>
         <div className="row">
-          <input type="password" placeholder="Anthropic API key (optional)" autoComplete="off" value={props.apiKey} onChange={(e) => props.setApiKey(e.target.value)} aria-label="Anthropic API key" />
+          <select value={props.provider} onChange={(e) => props.setProvider(e.target.value as Provider)} aria-label="LLM provider">
+            {(Object.keys(PROVIDERS) as Provider[]).map((p) => <option key={p} value={p}>{PROVIDERS[p].label}</option>)}
+          </select>
+          <input type="password" placeholder="API key (optional)" autoComplete="off" value={props.apiKey} onChange={(e) => props.setApiKey(e.target.value)} aria-label="LLM API key" />
           <input type="text" value={props.llmModel} onChange={(e) => props.setLlmModel(e.target.value)} aria-label="LLM model name" style={{ width: 180 }} />
         </div>
       </Section>
@@ -488,7 +513,7 @@ function ComparisonPanel(props: { q: CompiledQuery; selections: Partial<Record<S
   }
   const predicted = (selections.C as (SelectionResult & { predictedMs?: Record<string, number> }) | undefined)?.predictedMs ?? {};
   const modeName = (m: SelectorMode) =>
-    m === 'B' && selections.B && !selections.B.source.startsWith('llm') ? 'AI-assisted (cost model only)' : MODE_NAMES[m];
+    m === 'B' && selections.B && !selections.B.source.startsWith('llm') ? 'AI-assisted (cost model only)' : m === 'D' && selections.D && !selections.D.source.includes('llm') ? 'Combined (predictor only: no LLM)' : MODE_NAMES[m];
   const rows = MODES.map((m) => {
     const s = selections[m];
     const r = s ? bench.rows[s.selectedId] : undefined;
@@ -522,7 +547,7 @@ function ComparisonPanel(props: { q: CompiledQuery; selections: Partial<Record<S
           </tbody>
         </table>
       </div>
-      {allSame && <div className="hint">All three modes selected the same plan ({rows[0].s?.selectedId}). That is a legitimate outcome — the value of this view is the controlled comparison, not forcing a winner.</div>}
+      {allSame && <div className="hint">All four modes selected the same plan ({rows[0].s?.selectedId}). That is a legitimate outcome — the value of this view is the controlled comparison, not forcing a winner.</div>}
       {q.candidates.length < 2 && <div className="hint">This query has a single candidate, so there is nothing to choose between.</div>}
       <p className="small muted">Regret = measured time of the chosen plan ÷ fastest measured time in the candidate set (1.0 is ideal). Run-to-run noise in the browser can exceed small differences; use the held-out evaluation for conclusions.</p>
     </div>
@@ -547,12 +572,12 @@ function EvaluationPanel() {
   const ts = tr.test_scores;
   return (
     <div>
-      <p className="muted small">Computed offline from <code>artifacts/benchmark</code> (measured in {ev.environment_id}) on {T.A.cases} test cases drawn from templates the predictor never saw. Generated {ev.generated_at}.</p>
+      <p className="muted small">Computed offline from <code>artifacts/benchmark</code> (measured in {ev.environment_id}) on {T.A.cases} test cases ({ev.suite?.test_templates ?? '?'} held-out templates × 6 data profiles) drawn from templates the predictor never saw.{ev.llm ? ` The LLM modes (B, D) used ${ev.llm.model} via the free Google API.` : ''} Generated {ev.generated_at}.</p>
       <h3 style={{ fontSize: 13, margin: '8px 0' }}>Table 4.3 · selector comparison (held-out)</h3>
       <div className="scroll">
         <table>
           <thead><tr><th>Strategy</th><th className="num">Median selected runtime (ms)</th><th className="num">Median regret (95% CI)</th><th className="num">Oracle-hit %</th><th className="num">Decision latency (ms)</th><th className="num">Failures</th></tr></thead>
-          <tbody>{rowOf('A. Rule-based', T.A)}{rowOf(ev.llm_used ? 'B. AI-assisted' : 'B. AI-assisted (cost model only)', T.B)}{rowOf('C. Predictor-guided', T.C)}</tbody>
+          <tbody>{rowOf('A. Rule-based', T.A)}{T.B0 && rowOf('B0. Cost model only', T.B0)}{rowOf(ev.llm_used ? `B. AI-assisted (${ev.llm?.model})` : 'B. AI-assisted (cost model only)', T.B)}{rowOf('C. Predictor-guided', T.C)}{T.D && rowOf(ev.llm_used ? `D. Combined predictor + LLM (${ev.llm?.model})` : 'D. Combined (predictor only)', T.D)}</tbody>
         </table>
       </div>
       <ul className="small">{T.paired.map((p: any) => <li key={p.a + p.b}>{p.a} − {p.b} mean regret {fmt(p.mean_regret_diff, 4)} [{fmt(p.ci95[0], 4)}, {fmt(p.ci95[1], 4)}] → <b>{p.verdict}</b></li>)}</ul>

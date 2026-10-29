@@ -51,7 +51,7 @@ try {
   await page.click('button[role=tab]:has-text("Selector modes")');
   await page.waitForSelector('.mode-card .big >> nth=2', { timeout: 30_000 });
   const picks = await page.locator('.mode-card .big').allInnerTexts();
-  check(picks.length === 3 && picks.every((p) => /^P\d+$/.test(p)), `three modes picked plans: ${picks.join(', ')}`);
+  check(picks.length === 4 && picks.every((p) => /^P\d+$/.test(p)), `four modes picked plans: ${picks.join(', ')}`);
   await page.locator('.mode-card button:has-text("Run")').nth(2).click();
   await page.waitForSelector('h3:has-text("Mode C")', { timeout: 30_000 });
   check(true, 'selected plan executed and rows displayed');
@@ -71,7 +71,7 @@ try {
   // Evaluation
   await page.click('button[role=tab]:has-text("Held-out evaluation")');
   await page.waitForSelector('text=Table 4.3', { timeout: 15_000 });
-  check(await page.locator('text=inconclusive').count() > 0, 'held-out evaluation shows the honest verdicts');
+  check(await page.locator('text=inconclusive').count() > 0 && await page.locator('text=Combined predictor').count() > 0, 'held-out evaluation shows all modes and the honest verdicts');
   await page.screenshot({ path: join(shots, '6-evaluation.png'), fullPage: true });
 
   // switching profile + dark mode + mobile

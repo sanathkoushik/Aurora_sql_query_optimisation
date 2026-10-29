@@ -14,14 +14,15 @@
  candidate set P = {P1…Pn}  (identical for every selector)
    ├── Mode A  src/selectors/ruleBased.ts      fixed structural rules R1–R4
    ├── Mode B  src/selectors/aiAssisted.ts     analytical cost model (+ optional LLM re-rank, validated)
-   └── Mode C  src/selectors/predictorGuided.ts Random-Forest runtime prediction (exported JSON, TS interpreter)
+   ├── Mode C  src/selectors/predictorGuided.ts Random-Forest runtime prediction (exported JSON, TS interpreter)
+   └── Mode D  src/selectors/combined.ts        predictor top-3 shortlist, LLM picks among them; falls back to Mode C
    ▼
  selected plan ── src/runtime/codegen.ts  → pandas source ── Pyodide (python/aurora_runtime.py)
 ```
 
 ## Calibration / training path (offline)
 
-1. `npm run benchmark` – for each of 16 query templates × 6 data profiles, execute every valid
+1. `npm run benchmark` – for each of 32 query templates × 6 data profiles, execute every valid
    candidate, verify its rows against **SQLite running the original SQL**, then time survivors
    (2 warm-up + 9 interleaved timed runs, GC disabled around each run, median as the label).
    Output: `artifacts/benchmark/records.jsonl` (Appendix B format) and `meta.json`.
@@ -29,13 +30,13 @@
    `src/data/workloads.ts` before measurement), selects hyper-parameters on validation only,
    refits on train+validation, reports once on test, runs leave-one-template-out CV, and exports
    `artifacts/model/aurora_rf_v1.json` + a parity fixture.
-3. `npm run evaluate` – runs the three selectors on the same pools and scores them against the
+3. `npm run evaluate` – runs the selectors (A, B0, B, C, D) on the same pools and scores them against the
    measured medians (regret, oracle-hit, latency) with bootstrap confidence intervals.
 
 ## Correctness controls
 
 * Every candidate is structurally validated (schema propagation, each table scanned once, output schema).
-* Every candidate is result-checked against SQLite on all 6 profiles (`npm run validate`, 972 checks).
+* Every candidate is result-checked against SQLite on all 6 profiles (`npm run validate`, 2052 checks).
 * Float aggregates compare with rtol = atol = 1e-6; rows compare as multisets; ORDER BY key columns
   must also appear in the reference order when visible in the output.
 * A candidate that fails or is inequivalent is recorded with a reason and excluded from timing and training.
@@ -46,3 +47,10 @@
 `WHERE` (`= <> != < <= > >=`, `AND/OR/NOT`, `BETWEEN`, `IN (literals)`, `LIKE`) · `GROUP BY` · `HAVING` · `ORDER BY`.
 Everything else (outer joins, subqueries, `DISTINCT`, `LIMIT`, window functions, `NULL` tests) is
 rejected with a located diagnostic. Tables are NULL-free.
+
+## LLM safety contract (Modes B and D)
+
+* The LLM only sees valid, SQLite-verified candidates and can only answer with one of their ids; Mode D further restricts it to the predictor's top 3.
+* Missing key, timeout, HTTP error, malformed JSON or an unknown id: the cost-model choice (B) or predictor choice (D) is used and `source`/`warnings` say so.
+* Providers: Google Generative Language API (`geminiClient`, free tier, Gemini or Gemma models) and Anthropic Messages API (`anthropicClient`). Keys live in memory only.
+* Offline evaluation caches every answer (sha256 of model + prompt) in `artifacts/results/llm_cache.json`.

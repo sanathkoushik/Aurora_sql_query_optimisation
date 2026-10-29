@@ -1,69 +1,94 @@
 # Aurora evaluation results
 
-Generated 2026-10-15T17:30:52.685Z from `artifacts/benchmark` (972 candidate records, 0 failed/inequivalent, 2 warm-up + 9 timed runs each) in `pyodide-0.27.8/node-v24.13.0/python-3.12.7/pandas-2.2.3/numpy-2.0.2`.
+Generated 2026-10-29T17:12:53.511Z from `artifacts/benchmark` (2052 candidate records, 0 failed/inequivalent, 2 warm-up + 9 timed runs each) in `pyodide-0.27.8/node-v24.13.0/python-3.12.7/pandas-2.2.3/numpy-2.0.2`.
 
-Mode B **used the analytical cost model only (no LLM key configured for this run)**.
+LLM: **gemini-3.5-flash-lite** via Google Generative Language API (free tier), consulted by Modes B and D on the held-out test cases only (44 live calls, 76 cache hits, 0 retries). Mode B0 is the cost model alone.
 
-## Table 4.3 – Selector comparison on held-out test templates (24 cases: j2, p2, g1, g4 × 6 data profiles)
+## Table 4.3 – Selector comparison on held-out test templates (60 cases: j2, p2, g1, g4, q2, q5, q8, q12, q14, q16 × 6 data profiles)
 
 | Strategy | Median selected runtime (ms) | Median regret (95% bootstrap CI) | Oracle-hit rate (%, ≤5% of fastest) | Median decision latency (ms) | Result failures |
 |---|---|---|---|---|---|
-| A. Rule-based | 19.174 | 1.029 (1.017–1.109) | 62.5 | 0.026 | 0 |
-| B. Existing AI-assisted (cost model only) | 17.847 | 1.027 (1.010–1.121) | 62.5 | 0.160 | 0 |
-| C. Predictor-guided | 19.164 | 1.023 (1.009–1.046) | 70.8 | 0.237 | 0 |
+| A. Rule-based | 22.928 | 1.108 (1.079–1.147) | 23.3 | 0.079 | 0 |
+| B0. Cost model only | 23.670 | 1.085 (1.067–1.132) | 28.3 | 0.451 | 0 |
+| B. AI-assisted (gemini-3.5-flash-lite) | 23.670 | 1.089 (1.068–1.132) | 28.3 | 1.288 | 0 |
+| C. Predictor-guided | 23.956 | 1.041 (1.010–1.092) | 51.7 | 0.742 | 0 |
+| D. Combined predictor + LLM (gemini-3.5-flash-lite) | 24.535 | 1.052 (1.012–1.091) | 50.0 | 1.354 | 0 |
+
+LLM behaviour on the 60 test cases: Mode B answered validly 60 times (0 fallbacks) and chose a plan different from the cost model in 2; Mode D answered validly 60 times (0 fallbacks) and overrode the predictor in 15.
 
 Paired mean-regret differences (bootstrap 95% CI):
 
-- A − C: 0.0081 [-0.0222, 0.0379] → **inconclusive (CI includes 0)**
-- B − C: 0.0074 [-0.0580, 0.0641] → **inconclusive (CI includes 0)**
-- A − B: 0.0007 [-0.0445, 0.0558] → **inconclusive (CI includes 0)**
+- A − C: 0.0488 [0.0104, 0.0878] → **C better than A**
+- B0 − C: 0.0362 [0.0006, 0.0748] → **C better than B0**
+- A − B0: 0.0126 [-0.0151, 0.0393] → **inconclusive (CI includes 0)**
+- B − B0: 0.0011 [-0.0017, 0.0050] → **inconclusive (CI includes 0)**
+- B − C: 0.0373 [0.0027, 0.0753] → **C better than B**
+- D − C: 0.0028 [-0.0187, 0.0232] → **inconclusive (CI includes 0)**
+- D − B: -0.0345 [-0.0705, -0.0013] → **D better than B**
+- D − A: -0.0460 [-0.0839, -0.0062] → **D better than A**
 
-Run-to-run variation of a single timed run: median relative spread (max−min)/median = 35.9%, p90 = 94.0%. Differences smaller than this are not distinguishable from noise.
+Run-to-run variation of a single timed run: median relative spread (max−min)/median = 52.8%, p90 = 109.0%. Differences smaller than this are not distinguishable from noise.
 
 ## Table 4.4 – Predictor validation
 
 | Measure | Predictor | Median-runtime baseline |
 |---|---|---|
-| Held-out test MAE (ms) | 8.172 | 19.271 |
-| Held-out test RMSE (ms) | 14.721 | 32.628 |
-| Q-error median / p90 | 1.23 / 1.54 | 1.70 / 4.26 |
-| Validation MAE (ms) | 5.675 | 12.859 |
-| Train / validation / test templates | 9 / 3 / 4 | |
-| Train / validation / test records | 486 / 162 / 324 | |
-| Calibration wall-clock | 12.0 min | |
+| Held-out test MAE (ms) | 8.917 | 33.446 |
+| Held-out test RMSE (ms) | 13.964 | 53.886 |
+| Q-error median / p90 | 1.22 / 1.84 | 2.32 / 5.50 |
+| Validation MAE (ms) | 9.515 | 29.717 |
+| Train / validation / test templates | 16 / 6 / 10 | |
+| Train / validation / test records | 828 / 450 / 774 | |
+| Calibration wall-clock | 33.2 min | |
 | Model version / feature schema | aurora-rf-v1 / aurora-runtime-features-v1 | |
 
 ## RQ5 – Leave-one-template-out stability
 
-Mean MAE over the 16 held-out templates: model 5.951 ms vs baseline 15.496 ms; median-of-median Q-error: model 1.18 vs baseline 1.98; median selection regret across templates: 1.019.
+Mean MAE over the 16 held-out templates: model 6.677 ms vs baseline 26.228 ms; median-of-median Q-error: model 1.21 vs baseline 2.48; median selection regret across templates: 1.051.
 
 | Held-out template | Model MAE (ms) | Baseline MAE (ms) | Model Q-err (median) | Selection median regret |
 |---|---|---|---|---|
-| f1 | 2.308 | 15.517 | 1.19 | 1.000 |
-| f2 | 3.489 | 9.234 | 1.12 | 1.000 |
-| f3 | 0.954 | 16.736 | 1.27 | 1.000 |
-| g1 | 3.482 | 12.376 | 1.14 | 1.030 |
-| g2 | 13.698 | 14.870 | 1.72 | 1.022 |
-| g3 | 14.128 | 25.439 | 1.24 | 1.004 |
-| g4 | 11.870 | 21.771 | 1.27 | 1.044 |
-| g5 | 7.293 | 14.024 | 1.28 | 1.017 |
-| g6 | 6.855 | 13.808 | 1.17 | 1.013 |
-| j1 | 2.723 | 13.017 | 1.13 | 1.040 |
-| j2 | 4.150 | 15.178 | 1.17 | 1.012 |
-| j3 | 4.172 | 11.055 | 1.19 | 1.048 |
-| j4 | 4.386 | 11.352 | 1.18 | 1.051 |
-| j5 | 3.814 | 11.711 | 1.18 | 1.035 |
-| p1 | 2.638 | 14.197 | 1.10 | 1.029 |
-| p2 | 9.250 | 27.651 | 1.26 | 1.015 |
+| f1 | 1.618 | 21.562 | 1.40 | 1.000 |
+| f2 | 3.648 | 16.311 | 1.22 | 1.010 |
+| f3 | 1.054 | 23.272 | 1.41 | 1.000 |
+| g1 | 3.530 | 23.993 | 1.13 | 1.061 |
+| g2 | 15.607 | 27.100 | 1.57 | 1.038 |
+| g3 | 4.414 | 31.683 | 1.12 | 1.052 |
+| g4 | 12.574 | 41.166 | 1.19 | 1.036 |
+| g5 | 8.218 | 27.759 | 1.20 | 1.038 |
+| g6 | 4.213 | 27.296 | 1.07 | 1.000 |
+| j1 | 4.568 | 23.440 | 1.24 | 1.000 |
+| j2 | 8.600 | 27.550 | 1.25 | 1.051 |
+| j3 | 3.203 | 19.545 | 1.18 | 1.232 |
+| j4 | 7.052 | 21.206 | 1.17 | 1.091 |
+| j5 | 4.081 | 21.887 | 1.18 | 1.042 |
+| p1 | 3.573 | 26.367 | 1.12 | 1.050 |
+| p2 | 17.615 | 47.662 | 1.37 | 1.026 |
+| q1 | 1.883 | 21.242 | 1.37 | 1.000 |
+| q10 | 4.925 | 41.358 | 1.13 | 1.163 |
+| q11 | 11.225 | 16.202 | 1.38 | 1.012 |
+| q12 | 8.243 | 31.779 | 1.18 | 1.096 |
+| q13 | 4.075 | 19.342 | 1.18 | 1.014 |
+| q14 | 13.921 | 49.194 | 1.31 | 1.099 |
+| q15 | 5.476 | 23.609 | 1.17 | 1.170 |
+| q16 | 4.790 | 21.011 | 1.20 | 1.095 |
+| q2 | 3.084 | 16.289 | 1.32 | 1.054 |
+| q3 | 0.657 | 23.764 | 1.17 | 1.000 |
+| q4 | 7.384 | 24.019 | 1.31 | 1.135 |
+| q5 | 8.234 | 21.566 | 1.41 | 1.184 |
+| q6 | 5.058 | 25.302 | 1.26 | 1.084 |
+| q7 | 13.684 | 35.094 | 1.34 | 1.062 |
+| q8 | 11.690 | 23.653 | 1.45 | 1.000 |
+| q9 | 5.773 | 18.082 | 1.20 | 1.108 |
 
-## Supplementary – A vs B on all 96 cases (no learning involved)
+## Supplementary – A vs B on all 192 cases (no learning involved)
 
 | Strategy | Median selected runtime (ms) | Median regret | Oracle-hit rate (%) |
 |---|---|---|---|
-| A. Rule-based | 13.811 | 1.035 | 58.3 |
-| B. Cost model only | 13.668 | 1.027 | 66.7 |
+| A. Rule-based | 18.227 | 1.099 | 33.3 |
+| B0. Cost model only | 17.331 | 1.089 | 36.5 |
 
-Paired A − B mean regret: 0.0126 [-0.0081, 0.0364] → **inconclusive (CI includes 0)**
+Paired A − B mean regret: 0.0088 [-0.0077, 0.0263] → **inconclusive (CI includes 0)**
 
 ## Scope and limits
 

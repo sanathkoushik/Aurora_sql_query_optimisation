@@ -1,5 +1,5 @@
 /**
- * Benchmark workload: 16 query templates across the four families of Table 4.1 of the report.
+ * Benchmark workload: 32 query templates (16 original + 16 q-series) across the four families of Table 4.1 of the report.
  * The train/validation/test assignment is fixed here, before any measurement is taken, and is
  * done per query template (never per run) to prevent leakage.
  */
@@ -107,6 +107,40 @@ ORDER BY revenue DESC`,
     description: 'City-level units with HAVING over a join',
     sql: 'SELECT c.city, COUNT(*) AS n, SUM(o.quantity) AS units FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE c.age >= 40 GROUP BY c.city HAVING SUM(o.quantity) > 100 ORDER BY units DESC',
   },
+  // ---- Extended suite (q-series): 16 further templates added for the final evaluation. Splits are
+  // fixed here before their measurement, per template, exactly like the original 16. ----
+  { id: 'q1', family: 'filter-projection', split: 'train', description: 'Range filter with sort on customers',
+    sql: "SELECT customer_id, city, loyalty_score FROM customers WHERE loyalty_score > 50 AND segment = 'Consumer' ORDER BY loyalty_score DESC" },
+  { id: 'q2', family: 'filter-projection', split: 'test', description: 'Conjunctive filter on orders with sort',
+    sql: "SELECT order_id, amount, discount FROM orders WHERE channel = 'web' AND discount > 0.1 AND quantity >= 3 ORDER BY discount DESC" },
+  { id: 'q3', family: 'filter-projection', split: 'train', description: 'Brand filter with price range on products',
+    sql: "SELECT product_name, brand, price FROM products WHERE price BETWEEN 20 AND 200 AND stock > 10" },
+  { id: 'q4', family: 'join-filter', split: 'train', description: 'Products-orders join with filters on both sides',
+    sql: "SELECT p.product_name, o.amount FROM products p JOIN orders o ON p.product_id = o.product_id WHERE p.category = 'Toys' AND o.status = 'delivered'" },
+  { id: 'q5', family: 'join-filter', split: 'test', description: 'Customers-orders join with range filter on the larger side',
+    sql: "SELECT c.city, o.amount FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE o.amount > 200 AND c.region = 'North'" },
+  { id: 'q6', family: 'join-filter', split: 'validation', description: 'Highly selective join input with IN-list',
+    sql: "SELECT c.name, o.order_id FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE c.segment IN ('Enterprise', 'Corporate') AND o.channel = 'store'" },
+  { id: 'q7', family: 'join-filter', split: 'train', description: 'Join with sort on a pushed column',
+    sql: "SELECT p.brand, o.amount, o.order_date FROM orders o JOIN products p ON o.product_id = p.product_id WHERE o.discount > 0.15 ORDER BY o.amount DESC" },
+  { id: 'q8', family: 'join-projection', split: 'test', description: 'Wide-table join with projection of two columns',
+    sql: "SELECT c.email, o.shipping_cost FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE o.quantity > 4" },
+  { id: 'q9', family: 'join-projection', split: 'train', description: 'Join over products with OR predicate in one table',
+    sql: "SELECT p.category, o.channel, o.amount FROM products p JOIN orders o ON p.product_id = o.product_id WHERE p.rating > 4.2 OR p.stock < 20" },
+  { id: 'q10', family: 'join-projection', split: 'validation', description: 'Three-table join, projection only',
+    sql: "SELECT c.region, p.brand, o.amount FROM customers c JOIN orders o ON c.customer_id = o.customer_id JOIN products p ON o.product_id = p.product_id WHERE o.status = 'shipped'" },
+  { id: 'q11', family: 'group-aggregate', split: 'train', description: 'Group by status on orders',
+    sql: "SELECT status, COUNT(*) AS n, SUM(amount) AS total FROM orders WHERE amount > 20 GROUP BY status ORDER BY total DESC" },
+  { id: 'q12', family: 'group-aggregate', split: 'test', description: 'Average per region over a filtered join',
+    sql: "SELECT c.region, AVG(o.amount) AS avg_amount FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE o.status = 'delivered' AND c.age > 30 GROUP BY c.region ORDER BY avg_amount DESC" },
+  { id: 'q13', family: 'group-aggregate', split: 'train', description: 'Per-brand minimum price with HAVING',
+    sql: "SELECT p.brand, MIN(o.amount) AS min_amount, COUNT(*) AS n FROM products p JOIN orders o ON p.product_id = o.product_id WHERE p.category = 'Books' GROUP BY p.brand HAVING COUNT(*) > 5" },
+  { id: 'q14', family: 'group-aggregate', split: 'test', description: 'Three-table aggregation with filters on all three tables',
+    sql: "SELECT c.segment, p.category, SUM(o.quantity) AS units FROM customers c JOIN orders o ON c.customer_id = o.customer_id JOIN products p ON o.product_id = p.product_id WHERE c.region = 'East' AND p.rating > 3.5 AND o.status = 'delivered' GROUP BY c.segment, p.category ORDER BY units DESC" },
+  { id: 'q15', family: 'group-aggregate', split: 'validation', description: 'Channel revenue with join and city filter',
+    sql: "SELECT o.channel, SUM(o.amount) AS revenue FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE c.age BETWEEN 30 AND 50 GROUP BY o.channel" },
+  { id: 'q16', family: 'group-aggregate', split: 'test', description: 'Max shipping per category after a pushable filter',
+    sql: "SELECT p.category, MAX(o.shipping_cost) AS max_ship FROM orders o JOIN products p ON o.product_id = p.product_id WHERE o.channel = 'mobile' AND p.price > 50 GROUP BY p.category ORDER BY max_ship DESC" },
 ];
 
 export const PROFILE_IDS = [
